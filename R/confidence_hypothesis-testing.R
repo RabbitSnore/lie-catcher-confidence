@@ -54,7 +54,7 @@ lrt_h2 <- anova(glmer_h2_base, glmer_h2_interaction)
 
 glmer_h3_base <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + (1|study:sender)
@@ -65,7 +65,7 @@ glmer_h3_base <-
 
 glmer_h3_interaction <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + (1|study:sender)
@@ -86,7 +86,7 @@ lrt_h3 <- anova(glmer_h2_interaction, glmer_h3_base, glmer_h3_interaction)
 
 glmer_h4_base <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + (1 + confidence_centered + judgment | study:sender)
@@ -97,7 +97,7 @@ glmer_h4_base <-
 
 glmer_h4_interaction <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + (1 
@@ -118,7 +118,7 @@ lrt_h4 <- anova(glmer_h2_interaction, glmer_h4_base, glmer_h4_interaction)
 
 glmer_h5_base <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + (1|study:sender)
@@ -129,7 +129,7 @@ glmer_h5_base <-
 
 glmer_h5_interaction <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + (1|study:sender)
@@ -150,7 +150,7 @@ lrt_h5 <- anova(glmer_h2_interaction, glmer_h5_base, glmer_h5_interaction)
 
 glmer_h6_base <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + detectability_study_centered
@@ -162,7 +162,7 @@ glmer_h6_base <-
 
 glmer_h6_interaction <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * detectability_study_centered
@@ -178,7 +178,7 @@ lrt_h6 <- anova(glmer_h2_interaction, glmer_h6_base, glmer_h6_interaction)
 
 glmer_h6_base_rc <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + detectability_study_centered
@@ -191,7 +191,7 @@ glmer_h6_base_rc <-
 
 glmer_h6_interaction_rc <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * detectability_study_centered
@@ -211,7 +211,7 @@ lrt_h6_rc <- anova(glmer_h2_interaction, glmer_h6_base_rc, glmer_h6_interaction_
 
 glmer_h7_base <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + detectability_study_centered
@@ -223,7 +223,7 @@ glmer_h7_base <-
 
 glmer_h7_interaction <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * detectability_sender_centered
@@ -239,7 +239,7 @@ lrt_h7 <- anova(glmer_h2_interaction, glmer_h7_base, glmer_h7_interaction)
 
 glmer_h7_base_rc <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + detectability_study_centered
@@ -252,7 +252,7 @@ glmer_h7_base_rc <-
 
 glmer_h7_interaction_rc <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * detectability_sender_centered
@@ -271,7 +271,7 @@ lrt_h7_rc <- anova(glmer_h2_interaction, glmer_h7_base_rc, glmer_h7_interaction_
 
 glmer_h7_base_mock <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + detectability_study_centered
@@ -283,7 +283,7 @@ glmer_h7_base_mock <-
 
 glmer_h7_interaction_mock <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * detectability_sender_centered
@@ -299,7 +299,7 @@ lrt_h7_mock <- anova(glmer_h2_interaction, glmer_h7_base_mock, glmer_h7_interact
 
 glmer_h7_base_real <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + detectability_study_centered
@@ -310,7 +310,7 @@ glmer_h7_base_real <-
 
 glmer_h7_interaction_real <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * detectability_sender_centered
@@ -328,7 +328,7 @@ lrt_h7_real <- anova(glmer_h2_interaction, glmer_h7_base_real, glmer_h7_interact
 
 glmer_h8_base <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         + ability_receiver_centered
@@ -340,7 +340,7 @@ glmer_h8_base <-
 
 glmer_h8_interaction <-
   glmer(accuracy ~ 
-          1
+        1
         + confidence_centered
         * judgment
         * ability_receiver_centered
