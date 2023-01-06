@@ -174,6 +174,36 @@ glmer_h6_interaction <-
 
 lrt_h6 <- anova(glmer_h2_interaction, glmer_h6_base, glmer_h6_interaction)
 
+## Robustness check: Controlling for judgments per study
+
+glmer_h6_base_rc <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        + detectability_study_centered
+        + n_judgments_study
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = judgment)
+
+glmer_h6_interaction_rc <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        * detectability_study_centered
+        + n_judgments_study
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = judgment)
+
+lrt_h6_rc <- anova(glmer_h2_interaction, glmer_h6_base_rc, glmer_h6_interaction_rc)
+
 # Detectable Sender Specificity: Confidence predicts deception detection
 # accuracy, such that more confident judgments are more accurate, to a greater
 # extent for lie judgments than truth judgments, specifically for more
@@ -204,6 +234,92 @@ glmer_h7_interaction <-
         data = judgment)
 
 lrt_h7 <- anova(glmer_h2_interaction, glmer_h7_base, glmer_h7_interaction)
+
+## Robustness check: Controlling for judgments per sender
+
+glmer_h7_base_rc <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        + detectability_study_centered
+        + n_judgments_sender
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = judgment)
+
+glmer_h7_interaction_rc <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        * detectability_sender_centered
+        + n_judgments_sender
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = judgment)
+
+lrt_h7_rc <- anova(glmer_h2_interaction, glmer_h7_base_rc, glmer_h7_interaction_rc)
+
+## Robustness check: Split groups of studies
+
+### Mock crimes
+
+glmer_h7_base_mock <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        + detectability_study_centered
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = filter(judgment, study != "press_conf"))
+
+glmer_h7_interaction_mock <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        * detectability_sender_centered
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = filter(judgment, study != "press_conf"))
+
+lrt_h7_mock <- anova(glmer_h2_interaction, glmer_h7_base_mock, glmer_h7_interaction_mock)
+
+### Real
+
+glmer_h7_base_real <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        + detectability_study_centered
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = filter(judgment, study == "press_conf"))
+
+glmer_h7_interaction_real <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        * detectability_sender_centered
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = filter(judgment, study == "press_conf"))
+
+lrt_h7_real <- anova(glmer_h2_interaction, glmer_h7_base_real, glmer_h7_interaction_real)
 
 # Capable Receiver Specificity: Confidence predicts deception detection
 # accuracy, such that more confident judgments are more accurate, to a greater

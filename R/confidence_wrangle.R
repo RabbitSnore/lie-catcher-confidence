@@ -114,6 +114,3 @@ judgment <- raw_judgment %>%
   left_join(raw_detect_sender, by = c("sender")) %>% 
   left_join(raw_detect_study, by = c("study")) %>% 
   left_join(raw_ability_receiver, by = c("receiver"))
-
-
-
