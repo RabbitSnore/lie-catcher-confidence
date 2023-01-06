@@ -77,7 +77,7 @@ glmer_h3_interaction <-
         family = binomial(link = "logit"),
         data = judgment)
 
-lrt_h3 <- anova(glmer_h3_base, glmer_h3_interaction)
+lrt_h3 <- anova(glmer_h2_interaction, glmer_h3_base, glmer_h3_interaction)
 
 # Variation Across Contexts: Confidence predicts deception detection accuracy,
 # such that more confident judgments are more accurate, possibly to a greater
@@ -109,7 +109,7 @@ glmer_h4_interaction <-
         family = binomial(link = "logit"),
         data = judgment)
 
-lrt_h4 <- anova(glmer_h4_base, glmer_h4_interaction)
+lrt_h4 <- anova(glmer_h2_interaction, glmer_h4_base, glmer_h4_interaction)
 
 # Variation Across Receivers: Confidence predicts deception detection accuracy,
 # such that more confident judgments are more accurate, possibly to a greater
@@ -141,7 +141,7 @@ glmer_h5_interaction <-
         family = binomial(link = "logit"),
         data = judgment)
 
-lrt_h5 <- anova(glmer_h5_base, glmer_h5_interaction)
+lrt_h5 <- anova(glmer_h2_interaction, glmer_h5_base, glmer_h5_interaction)
 
 # Detectable Context Specificity: Confidence predicts deception detection
 # accuracy, such that more confident judgments are more accurate, to a greater
