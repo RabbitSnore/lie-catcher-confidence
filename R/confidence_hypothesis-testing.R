@@ -38,7 +38,10 @@ accuracy_study_veracity <- raw_judgment %>%
 confidence_table <- judgment %>% 
   group_by(judgment, confidence) %>% 
   summarise(
-    accuracy = sum(accuracy) / n()
+    accuracy = sum(accuracy) / n(),
+    se       = sqrt((accuracy * (1 - accuracy)) / n()),
+    ci_lb    = accuracy - se * qnorm(.975),
+    ci_ub    = accuracy + se * qnorm(.975)
   )
 
 confidence_plot <- 
@@ -49,6 +52,14 @@ ggplot(confidence_table,
          shape = as.factor(judgment)
        )) +
   geom_point() +
+  geom_errorbar(
+    aes(
+      ymin = ci_lb,
+      ymax = ci_ub
+    ),
+    width = .25,
+    alpha = .20
+  ) +
   geom_line() +
   scale_y_continuous(
     limits = c(0, 1),
@@ -72,7 +83,10 @@ ggplot(confidence_table,
 confidence_study_table <- judgment %>% 
   group_by(study, judgment, confidence) %>% 
   summarise(
-    accuracy = sum(accuracy) / n()
+    accuracy = sum(accuracy) / n(),
+    se       = sqrt((accuracy * (1 - accuracy)) / n()),
+    ci_lb    = accuracy - se * qnorm(.975),
+    ci_ub    = accuracy + se * qnorm(.975)
   ) %>% 
   mutate(
     study = case_when(
@@ -92,6 +106,14 @@ confidence_study_plot <-
          )) +
   facet_wrap(~ study, nrow = 2) +
   geom_point() +
+  geom_errorbar(
+    aes(
+      ymin = ci_lb,
+      ymax = ci_ub
+    ),
+    width = .25,
+    alpha = .20
+  ) +
   geom_line() +
   scale_y_continuous(
     limits = c(0, 1),
@@ -118,7 +140,10 @@ detectability_table <- judgment %>%
   ) %>% 
   group_by(detectability_bin, judgment, confidence) %>% 
   summarise(
-    accuracy = sum(accuracy) / n()
+    accuracy = sum(accuracy) / n(),
+    se       = sqrt((accuracy * (1 - accuracy)) / n()),
+    ci_lb    = accuracy - se * qnorm(.975),
+    ci_ub    = accuracy + se * qnorm(.975)
   )
 
 confidence_detectability_plot <- 
@@ -130,6 +155,14 @@ confidence_detectability_plot <-
          )) +
   facet_wrap(~ detectability_bin, nrow = 1) +
   geom_point() +
+  geom_errorbar(
+    aes(
+      ymin = ci_lb,
+      ymax = ci_ub
+    ),
+    width = .25,
+    alpha = .20
+  ) +
   geom_line() +
   scale_y_continuous(
     limits = c(0, 1),
