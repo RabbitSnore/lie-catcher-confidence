@@ -4,6 +4,150 @@
 
 ################################################################################
 
+# Descriptives -----------------------------------------------------------------
+
+# Accuracy rates
+
+accuracy_overall <- raw_judgment %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+accuracy_veracity <- raw_judgment %>%
+  group_by(veracity) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+accuracy_study <- raw_judgment %>% 
+  group_by(study) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+accuracy_study_veracity <- raw_judgment %>% 
+  group_by(study, veracity) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+# Confidence and accuracy
+
+## Overall
+
+confidence_table <- judgment %>% 
+  group_by(judgment, confidence) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+confidence_plot <- 
+ggplot(confidence_table,
+       aes(
+         x     = confidence, 
+         y     = accuracy,
+         shape = as.factor(judgment)
+       )) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, .05)
+  ) +
+  scale_x_continuous(
+    breaks = 1:7
+  ) +
+  scale_shape_discrete(
+    labels = c("Truth", "Lie")
+  ) +
+  labs(
+    shape = "Judgment",
+    y     = "Accuracy",
+    x     = "Confidence"
+  ) +
+  theme_classic()
+
+## By study
+
+confidence_study_table <- judgment %>% 
+  group_by(study, judgment, confidence) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  ) %>% 
+  mutate(
+    study = case_when(
+      study == "luke"        ~ "Luke et al. (2014)",
+      study == "sorochinski" ~ "Sorochinski et al (2014)",
+      study == "toomey"      ~ "Toomey (2013)",
+      study == "press_conf"  ~ "Vrij & Mann (2001)"
+    )
+  )
+
+confidence_study_plot <- 
+  ggplot(confidence_study_table,
+         aes(
+           x     = confidence, 
+           y     = accuracy,
+           shape = as.factor(judgment)
+         )) +
+  facet_wrap(~ study, nrow = 2) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, .05)
+  ) +
+  scale_x_continuous(
+    breaks = 1:7
+  ) +
+  scale_shape_discrete(
+    labels = c("Truth", "Lie")
+  ) +
+  labs(
+    shape = "Judgment",
+    y     = "Accuracy",
+    x     = "Confidence"
+  ) +
+  theme_classic()
+
+## By sender detectability
+
+detectability_table <- judgment %>% 
+  mutate(
+    detectability_bin = cut_number(detectability_sender, 3)
+  ) %>% 
+  group_by(detectability_bin, judgment, confidence) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+confidence_detectability_plot <- 
+  ggplot(detectability_table,
+         aes(
+           x     = confidence, 
+           y     = accuracy,
+           shape = as.factor(judgment)
+         )) +
+  facet_wrap(~ detectability_bin, nrow = 1) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, .05)
+  ) +
+  scale_x_continuous(
+    breaks = 1:7
+  ) +
+  scale_shape_discrete(
+    labels = c("Truth", "Lie")
+  ) +
+  labs(
+    shape = "Judgment",
+    y     = "Accuracy",
+    x     = "Confidence"
+  ) +
+  theme_classic()
+
 # Hypothesis testing -----------------------------------------------------------
 
 # General Confidence-Accuracy Relationship: Confidence predicts deception
