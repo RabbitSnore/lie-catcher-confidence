@@ -31,6 +31,19 @@ accuracy_study_veracity <- raw_judgment %>%
     accuracy = sum(accuracy) / n()
   )
 
+accuracy_judgment <- raw_judgment %>%
+  group_by(judgment) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n()
+  )
+
+# Bias rates
+
+judgment_bias <- raw_judgment %>% 
+  summarise(
+    lie_judgment = sum(judgment) / n()
+  )
+
 # Confidence and accuracy
 
 ## Overall
@@ -97,6 +110,9 @@ confidence_study_table <- judgment %>%
     )
   )
 
+confidence_study_table$ci_lb[confidence_study_table$ci_lb < 0] <- 0
+confidence_study_table$ci_ub[confidence_study_table$ci_ub > 1] <- 1
+
 confidence_study_plot <- 
   ggplot(confidence_study_table,
          aes(
@@ -116,7 +132,7 @@ confidence_study_plot <-
   ) +
   geom_line() +
   scale_y_continuous(
-    limits = c(0, 1),
+    limits = c(-0.01, 1.01),
     breaks = seq(0, 1, .05)
   ) +
   scale_x_continuous(
@@ -136,7 +152,7 @@ confidence_study_plot <-
 
 detectability_table <- judgment %>% 
   mutate(
-    detectability_bin = cut_number(detectability_sender, 3)
+    detectability_bin = cut_number(detectability_sender, 2)
   ) %>% 
   group_by(detectability_bin, judgment, confidence) %>% 
   summarise(
@@ -145,6 +161,9 @@ detectability_table <- judgment %>%
     ci_lb    = accuracy - se * qnorm(.975),
     ci_ub    = accuracy + se * qnorm(.975)
   )
+
+detectability_table$ci_lb[detectability_table$ci_lb < 0] <- 0
+detectability_table$ci_ub[detectability_table$ci_ub > 1] <- 1
 
 confidence_detectability_plot <- 
   ggplot(detectability_table,
@@ -165,7 +184,7 @@ confidence_detectability_plot <-
   ) +
   geom_line() +
   scale_y_continuous(
-    limits = c(0, 1),
+    limits = c(-0.01, 1.01),
     breaks = seq(0, 1, .05)
   ) +
   scale_x_continuous(
@@ -176,6 +195,93 @@ confidence_detectability_plot <-
   ) +
   labs(
     shape = "Judgment",
+    y     = "Accuracy",
+    x     = "Confidence"
+  ) +
+  theme_classic()
+
+detectability_table_overall <- judgment %>% 
+  mutate(
+    detectability_bin = cut_number(detectability_sender, 2)
+  ) %>% 
+  group_by(detectability_bin, confidence) %>% 
+  summarise(
+    accuracy = sum(accuracy) / n(),
+    se       = sqrt((accuracy * (1 - accuracy)) / n()),
+    ci_lb    = accuracy - se * qnorm(.975),
+    ci_ub    = accuracy + se * qnorm(.975)
+  )
+
+detectability_table_overall$ci_lb[detectability_table_overall$ci_lb < 0] <- 0
+detectability_table_overall$ci_ub[detectability_table_overall$ci_ub > 1] <- 1
+
+sender_labels        <- c("Less Detectable Senders (0-50%)", "More Detectable Senders (50-100%)")
+names(sender_labels) <- levels(detectability_table$detectability_bin)
+
+sender_detect_table <- raw_judgment %>% 
+  group_by(veracity, sender) %>% 
+  summarise(
+    detectability_sender = sum(accuracy) / n(),
+    n_judgments_sender   = n()
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    detectability_bin = cut_number(detectability_sender, 2)
+  )
+
+confidence_detectability_plot_overall <- 
+  ggplot(detectability_table,
+         aes(
+           x     = confidence, 
+           y     = accuracy,
+           color = as.factor(judgment)
+         )) +
+  facet_wrap(~ detectability_bin, nrow = 1,
+             labeller = labeller(detectability_bin = sender_labels)) +
+  geom_point() +
+  geom_errorbar(
+    aes(
+      ymin = ci_lb,
+      ymax = ci_ub
+    ),
+    width = .25,
+    alpha = .20
+  ) +
+  geom_line(
+    linewidth = 1
+  ) +
+  scale_y_continuous(
+    limits = c(-0.01, 1.01),
+    breaks = seq(0, 1, .05)
+  ) +
+  scale_x_continuous(
+    breaks = 1:7
+  ) +
+  scale_color_manual(
+    labels = c("Truth", "Lie"),
+    values = c("#473198", "#AF3E4D")
+  ) +
+  geom_rug(
+    data = sender_detect_table,
+    inherit.aes = FALSE,
+    aes(
+      y     = detectability_sender
+    ),
+    alpha = .20
+  ) +
+  geom_line(
+    data = detectability_table_overall,
+    inherit.aes = FALSE,
+    aes(
+      x     = confidence, 
+      y     = accuracy
+    ),
+    alpha = .10,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  labs(
+    color = "Judgment",
     y     = "Accuracy",
     x     = "Confidence"
   ) +
@@ -444,6 +550,28 @@ lrt_h7_rc <- anova(glmer_h2_interaction, glmer_h7_base_rc, glmer_h7_interaction_
 
 ## Robustness check: Split groups of studies
 
+glmer_h2_mock <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = filter(judgment, study != "press_conf"))
+
+glmer_h2_real <-
+  glmer(accuracy ~ 
+          1
+        + confidence_centered
+        * judgment
+        + (1|study:sender)
+        + (1|sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data =filter(judgment, study == "press_conf"))
+
 ### Mock crimes
 
 glmer_h7_base_mock <-
@@ -470,7 +598,7 @@ glmer_h7_interaction_mock <-
         family = binomial(link = "logit"),
         data = filter(judgment, study != "press_conf"))
 
-lrt_h7_mock <- anova(glmer_h2_interaction, glmer_h7_base_mock, glmer_h7_interaction_mock)
+lrt_h7_mock <- anova(glmer_h2_mock, glmer_h7_base_mock, glmer_h7_interaction_mock)
 
 ### Real
 
@@ -496,7 +624,7 @@ glmer_h7_interaction_real <-
         family = binomial(link = "logit"),
         data = filter(judgment, study == "press_conf"))
 
-lrt_h7_real <- anova(glmer_h2_interaction, glmer_h7_base_real, glmer_h7_interaction_real)
+lrt_h7_real <- anova(glmer_h2_real, glmer_h7_base_real, glmer_h7_interaction_real)
 
 # Capable Receiver Specificity: Confidence predicts deception detection
 # accuracy, such that more confident judgments are more accurate, to a greater
