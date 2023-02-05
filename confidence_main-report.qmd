@@ -171,7 +171,7 @@ summary(glmer_h5_base)
 summary(glmer_h5_interaction)
 ```
 
-# Hypothesis 6: Detectable Context Specificity: 
+# Hypothesis 6: Detectable Context Specificity
 
 *Confidence predicts deception detection accuracy, such that more confident
 judgments are more accurate, to a greater extent for lie judgments than truth
@@ -239,7 +239,6 @@ summary(glmer_h7_interaction)
 ```{r}
 interactions_h7
 ```
-
 
 ## Robustness check: Controlling for judgments per sender
 

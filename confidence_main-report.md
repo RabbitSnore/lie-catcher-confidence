@@ -736,7 +736,7 @@ summary(glmer_h5_interaction)
     optimizer (bobyqa) convergence code: 0 (OK)
     boundary (singular) fit: see help('isSingular')
 
-# Hypothesis 6: Detectable Context Specificity:
+# Hypothesis 6: Detectable Context Specificity
 
 *Confidence predicts deception detection accuracy, such that more
 confident judgments are more accurate, to a greater extent for lie
