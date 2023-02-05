@@ -184,7 +184,7 @@ confidence_study_table %>%
 knitr::include_graphics("./figures/confidence_study_plot.png")
 ```
 
-<img src="./figures/confidence_study_plot.png" width="1800" />
+<img src="./figures/confidence_study_plot.png" width="2700" />
 
 ## By Sender Detectability
 
@@ -192,12 +192,15 @@ knitr::include_graphics("./figures/confidence_study_plot.png")
 knitr::include_graphics("./figures/confidence_detectability_plot.png")
 ```
 
-<img src="./figures/confidence_detectability_plot.png" width="1800" />
+<img src="./figures/confidence_detectability_plot.png" width="2400" />
 
 # Hypothesis 1: General Confidence-Accuracy Relationship
 
 *Confidence predicts deception detection accuracy, such that more
 confident judgments are more accurate.*
+
+There is no significant overall relationship between confidence and
+accuracy.
 
 ``` r
 summary(glmer_h1)
@@ -242,6 +245,10 @@ summary(glmer_h1)
 *Confidence predicts deception detection accuracy, such that more
 confident judgments are more accurate, to a greater extent for lie
 judgments than truth judgments.*
+
+For truth judgments, confidence is somewhat predictive of accuracy, but
+for lie judgments, confidence negatively predicts accuracy. That is, for
+lie judgments, people are less accurate when they are more confident.
 
 ``` r
 lrt_h2
@@ -346,7 +353,7 @@ summary(glmer_h2_interaction)
     unable to evaluate scaled gradient
     Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
 
-# Hypothesis 3: Variation Across Senders:
+# Hypothesis 3: Variation Across Senders
 
 *Confidence predicts deception detection accuracy, such that more
 confident judgments are more accurate, possibly to a greater extent for
@@ -619,6 +626,10 @@ confident judgments are more accurate, possibly to a greater extent for
 lie judgments than truth judgments, and this tendency varies in
 magnitude across receivers.*
 
+As one would expect from past literature, receivers vary extremely
+little in their ability to detect deception, and there is no evidence
+that receivers vary in their confidence-accuracy calibration.
+
 ``` r
 lrt_h5
 ```
@@ -727,10 +738,16 @@ summary(glmer_h5_interaction)
 
 # Hypothesis 6: Detectable Context Specificity:
 
-Confidence predicts deception detection accuracy, such that more
+*Confidence predicts deception detection accuracy, such that more
 confident judgments are more accurate, to a greater extent for lie
 judgments than truth judgments, specifically in situations in which
-judgments tend to be more accurate.
+judgments tend to be more accurate.*
+
+Contrary to this hypothesis, confidence for lie judgments was negatively
+associated with accuracy in contexts where accuracy was lower and not
+significantly associated with accuracy in contexts where accuracy was
+higher. Confidence for truth judgments was positively associated with
+accuracy in contexts where accuracy was higher.
 
 ``` r
 lrt_h6
@@ -860,6 +877,82 @@ summary(glmer_h6_interaction)
     optimizer (bobyqa) convergence code: 0 (OK)
     Model is nearly unidentifiable: large eigenvalue ratio
      - Rescale variables?
+
+``` r
+interactions_h6
+```
+
+    █████████████████████ While judgment (2nd moderator) = 1.00 ████████████████████ 
+
+    JOHNSON-NEYMAN INTERVAL 
+
+    When detectability_study_centered is INSIDE the interval [-0.23, -0.01],
+    the slope of confidence_centered is p < .05.
+
+    Note: The range of observed values of detectability_study_centered is
+    [-0.06, 0.06]
+
+    SIMPLE SLOPES ANALYSIS 
+
+    Slope of confidence_centered when detectability_study_centered = -0.03351836: 
+
+       Est.   S.E.   z val.      p
+    ------- ------ -------- ------
+      -0.18   0.06    -3.19   0.00
+
+    Slope of confidence_centered when detectability_study_centered = -0.06444493: 
+
+       Est.   S.E.   z val.      p
+    ------- ------ -------- ------
+      -0.26   0.09    -3.00   0.00
+
+    Slope of confidence_centered when detectability_study_centered =  0.04231498: 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.02   0.13     0.17   0.87
+
+    Slope of confidence_centered when detectability_study_centered =  0.05564831: 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.06   0.15     0.38   0.70
+
+    █████████████████████ While judgment (2nd moderator) = 0.00 ████████████████████ 
+
+    JOHNSON-NEYMAN INTERVAL 
+
+    When detectability_study_centered is INSIDE the interval [-0.02, 0.05], the
+    slope of confidence_centered is p < .05.
+
+    Note: The range of observed values of detectability_study_centered is
+    [-0.06, 0.06]
+
+    SIMPLE SLOPES ANALYSIS 
+
+    Slope of confidence_centered when detectability_study_centered = -0.03351836: 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.09   0.06     1.37   0.17
+
+    Slope of confidence_centered when detectability_study_centered = -0.06444493: 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.03   0.10     0.30   0.76
+
+    Slope of confidence_centered when detectability_study_centered =  0.04231498: 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.23   0.11     2.05   0.04
+
+    Slope of confidence_centered when detectability_study_centered =  0.05564831: 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.26   0.13     1.95   0.05
 
 ## Robustness check: Controlling for judgments per study
 
@@ -1014,6 +1107,11 @@ confident judgments are more accurate, to a greater extent for lie
 judgments than truth judgments, specifically for more detectable
 senders.*
 
+Contrary to this hypothesis, confidence for lie judgments was
+consistently negatively associated with accuracy, and confidence for
+truth judgments is positively associated with accuracy for more
+detectable senders.
+
 ``` r
 lrt_h7
 ```
@@ -1141,6 +1239,70 @@ summary(glmer_h7_interaction)
     cnfdnc_::__  0.035  0.024 -0.062 -0.026  0.178 -0.684 -0.095
     optimizer (bobyqa) convergence code: 0 (OK)
     boundary (singular) fit: see help('isSingular')
+
+``` r
+interactions_h7
+```
+
+    █████████████████████ While judgment (2nd moderator) = 1.00 ████████████████████ 
+
+    JOHNSON-NEYMAN INTERVAL 
+
+    When detectability_sender_centered is INSIDE the interval [-0.21, 0.13],
+    the slope of confidence_centered is p < .05.
+
+    Note: The range of observed values of detectability_sender_centered is
+    [-0.50, 0.50]
+
+    SIMPLE SLOPES ANALYSIS 
+
+    Slope of confidence_centered when detectability_sender_centered = -0.1561 (Lower tercile median): 
+
+       Est.   S.E.   z val.      p
+    ------- ------ -------- ------
+      -0.17   0.07    -2.39   0.02
+
+    Slope of confidence_centered when detectability_sender_centered =  0.0306 (Middle tercile median): 
+
+       Est.   S.E.   z val.      p
+    ------- ------ -------- ------
+      -0.18   0.07    -2.66   0.01
+
+    Slope of confidence_centered when detectability_sender_centered =  0.1173 (Upper tercile median): 
+
+       Est.   S.E.   z val.      p
+    ------- ------ -------- ------
+      -0.18   0.09    -2.04   0.04
+
+    █████████████████████ While judgment (2nd moderator) = 0.00 ████████████████████ 
+
+    JOHNSON-NEYMAN INTERVAL 
+
+    When detectability_sender_centered is OUTSIDE the interval [-0.25, 0.01],
+    the slope of confidence_centered is p < .05.
+
+    Note: The range of observed values of detectability_sender_centered is
+    [-0.50, 0.50]
+
+    SIMPLE SLOPES ANALYSIS 
+
+    Slope of confidence_centered when detectability_sender_centered = -0.1561 (Lower tercile median): 
+
+       Est.   S.E.   z val.      p
+    ------- ------ -------- ------
+      -0.10   0.08    -1.18   0.24
+
+    Slope of confidence_centered when detectability_sender_centered =  0.0306 (Middle tercile median): 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.14   0.06     2.49   0.01
+
+    Slope of confidence_centered when detectability_sender_centered =  0.1173 (Upper tercile median): 
+
+      Est.   S.E.   z val.      p
+    ------ ------ -------- ------
+      0.25   0.07     3.62   0.00
 
 ## Robustness check: Controlling for judgments per sender
 

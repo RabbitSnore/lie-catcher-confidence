@@ -502,6 +502,13 @@ glmer_h6_interaction <-
 
 lrt_h6 <- anova(glmer_h2_interaction, glmer_h6_base, glmer_h6_interaction)
 
+interactions_h6 <- sim_slopes(glmer_h6_interaction, 
+                              pred = confidence_centered, 
+                              mod2 = judgment, 
+                              modx = detectability_study_centered, 
+                              mod2.values = c(0, 1), 
+                              modx.values = unique(judgment$detectability_study_centered))
+
 ## Robustness check: Controlling for judgments per study
 
 glmer_h6_base_rc <-
@@ -574,6 +581,13 @@ glmer_h7_interaction <-
           optCtrl = list(maxfun = 100000)))
 
 lrt_h7 <- anova(glmer_h2_interaction, glmer_h7_base, glmer_h7_interaction)
+
+interactions_h7 <- sim_slopes(glmer_h7_interaction, 
+                              pred = confidence_centered, 
+                              mod2 = judgment, 
+                              modx = detectability_sender_centered, 
+                              mod2.values = c(0, 1), 
+                              modx.values = "terciles")
 
 ## Robustness check: Controlling for judgments per sender
 
@@ -794,6 +808,12 @@ if (!dir.exists("./figures/")) {
   
 }
 
-save_plot("./figures/confidence_plot.png", confidence_plot)
-save_plot("./figures/confidence_study_plot.png", confidence_study_plot)
-save_plot("./figures/confidence_detectability_plot.png", confidence_detectability_plot_overall)
+save_plot("./figures/confidence_plot.png", 
+          confidence_plot, 
+          base_width = 6, base_height = 4)
+save_plot("./figures/confidence_study_plot.png", 
+          confidence_study_plot,
+          base_width = 9, base_height = 6)
+save_plot("./figures/confidence_detectability_plot.png", 
+          confidence_detectability_plot_overall,
+          base_width = 8, base_height = 4)

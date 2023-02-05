@@ -12,7 +12,8 @@ packages <- c(
   "ggplot2",
   "readr",
   "lme4",
-  "cowplot"
+  "cowplot",
+  "interactions"
 )
 
 lapply(packages, library, character.only = TRUE)

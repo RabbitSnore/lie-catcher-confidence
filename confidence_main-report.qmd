@@ -81,6 +81,8 @@ knitr::include_graphics("./figures/confidence_detectability_plot.png")
 *Confidence predicts deception detection accuracy, such that more confident
 judgments are more accurate.*
 
+There is no significant overall relationship between confidence and accuracy.
+
 ```{r}
 summary(glmer_h1)
 ```
@@ -90,6 +92,10 @@ summary(glmer_h1)
 *Confidence predicts deception detection accuracy, such that more confident
 judgments are more accurate, to a greater extent for lie judgments than truth
 judgments.*
+
+For truth judgments, confidence is somewhat predictive of accuracy, but for lie
+judgments, confidence negatively predicts accuracy. That is, for lie judgments,
+people are less accurate when they are more confident.
 
 ```{r}
 lrt_h2
@@ -103,7 +109,7 @@ summary(glmer_h2_base)
 summary(glmer_h2_interaction)
 ```
 
-# Hypothesis 3: Variation Across Senders: 
+# Hypothesis 3: Variation Across Senders
 
 *Confidence predicts deception detection accuracy, such that more confident
 judgments are more accurate, possibly to a greater extent for lie judgments than
@@ -149,6 +155,10 @@ summary(glmer_h4_interaction)
 judgments are more accurate, possibly to a greater extent for lie judgments than
 truth judgments, and this tendency varies in magnitude across receivers.*
 
+As one would expect from past literature, receivers vary extremely little in
+their ability to detect deception, and there is no evidence that receivers vary
+in their confidence-accuracy calibration.
+
 ```{r}
 lrt_h5
 ```
@@ -163,10 +173,16 @@ summary(glmer_h5_interaction)
 
 # Hypothesis 6: Detectable Context Specificity: 
 
-Confidence predicts deception detection accuracy, such that more confident
+*Confidence predicts deception detection accuracy, such that more confident
 judgments are more accurate, to a greater extent for lie judgments than truth
 judgments, specifically in situations in which judgments tend to be more
-accurate.
+accurate.*
+
+Contrary to this hypothesis, confidence for lie judgments was negatively
+associated with accuracy in contexts where accuracy was lower and not
+significantly associated with accuracy in contexts where accuracy was higher.
+Confidence for truth judgments was positively associated with accuracy in
+contexts where accuracy was higher.
 
 ```{r}
 lrt_h6
@@ -178,6 +194,10 @@ summary(glmer_h6_base)
 
 ```{r}
 summary(glmer_h6_interaction)
+```
+
+```{r}
+interactions_h6
 ```
 
 ## Robustness check: Controlling for judgments per study
@@ -200,6 +220,10 @@ summary(glmer_h6_interaction_rc)
 judgments are more accurate, to a greater extent for lie judgments than truth
 judgments, specifically for more detectable senders.*
 
+Contrary to this hypothesis, confidence for lie judgments was consistently
+negatively associated with accuracy, and confidence for truth judgments is
+positively associated with accuracy for more detectable senders.
+
 ```{r}
 lrt_h7
 ```
@@ -211,6 +235,11 @@ summary(glmer_h7_base)
 ```{r}
 summary(glmer_h7_interaction)
 ```
+
+```{r}
+interactions_h7
+```
+
 
 ## Robustness check: Controlling for judgments per sender
 
