@@ -1800,6 +1800,9 @@ confident judgments are more accurate, to a greater extent for lie
 judgments than truth judgments, specifically for receivers who tend to
 be more accurate.*
 
+There is no evidence that more capable receivers have better
+confidence-accuracy calibration.
+
 ``` r
 lrt_h8
 ```
