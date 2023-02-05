@@ -1,0 +1,280 @@
+---
+title: "Does Confidence Predict Deception Detection Accuracy?"
+format: gfm
+---
+
+```{r, include = FALSE}
+source("./R/confidence_wrangle.R")
+source("./R/confidence_hypothesis-testing.R")
+```
+
+# Descriptives
+
+## Accuracy Rates
+
+```{r}
+accuracy_overall %>% 
+  knitr::kable()
+```
+```{r}
+accuracy_veracity %>% 
+  knitr::kable()
+```
+
+```{r}
+accuracy_study %>% 
+  knitr::kable()
+```
+
+```{r}
+accuracy_study_veracity %>% 
+  knitr::kable()
+```
+
+```{r}
+accuracy_judgment %>% 
+  knitr::kable()
+```
+
+# Bias
+
+```{r}
+judgment_bias %>% 
+  knitr::kable()
+```
+
+```{r}
+judgment_bias_study %>% 
+  knitr::kable()
+```
+
+
+# Confidence
+
+```{r}
+confidence_table
+```
+
+```{r}
+knitr::include_graphics("./figures/confidence_plot.png")
+```
+
+## By Study
+
+```{r}
+confidence_study_table %>% 
+  knitr::kable()
+```
+
+```{r}
+knitr::include_graphics("./figures/confidence_study_plot.png")
+```
+
+## By Sender Detectability
+
+```{r}
+knitr::include_graphics("./figures/confidence_detectability_plot.png")
+```
+
+# Hypothesis 1: General Confidence-Accuracy Relationship
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate.*
+
+```{r}
+summary(glmer_h1)
+```
+
+# Hypothesis 2: Signal-Present Judgment Specificity
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, to a greater extent for lie judgments than truth
+judgments.*
+
+```{r}
+lrt_h2
+```
+
+```{r}
+summary(glmer_h2_base)
+```
+
+```{r}
+summary(glmer_h2_interaction)
+```
+
+# Hypothesis 3: Variation Across Senders: 
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, possibly to a greater extent for lie judgments than
+truth judgments, and this tendency varies in magnitude across senders.*
+
+Model failed to converge. Do not interpret.
+
+```{r}
+lrt_h3
+```
+
+```{r}
+summary(glmer_h3_base)
+```
+
+```{r}
+summary(glmer_h3_interaction)
+```
+
+# Hypothesis 4: Variation Across Contexts
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, possibly to a greater extent for lie judgments than
+truth judgments, and this tendency varies in magnitude across contexts.*
+
+Model failed to converge. Do not interpret.
+
+```{r}
+lrt_h4
+```
+
+```{r}
+summary(glmer_h4_base)
+```
+
+```{r}
+summary(glmer_h4_interaction)
+```
+
+# Hypothesis 5: Variation Across Receivers
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, possibly to a greater extent for lie judgments than
+truth judgments, and this tendency varies in magnitude across receivers.*
+
+```{r}
+lrt_h5
+```
+
+```{r}
+summary(glmer_h5_base)
+```
+
+```{r}
+summary(glmer_h5_interaction)
+```
+
+# Hypothesis 6: Detectable Context Specificity: 
+
+Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, to a greater extent for lie judgments than truth
+judgments, specifically in situations in which judgments tend to be more
+accurate.
+
+```{r}
+lrt_h6
+```
+
+```{r}
+summary(glmer_h6_base)
+```
+
+```{r}
+summary(glmer_h6_interaction)
+```
+
+## Robustness check: Controlling for judgments per study
+
+```{r}
+lrt_h6_rc
+```
+
+```{r}
+summary(glmer_h6_base_rc)
+```
+
+```{r}
+summary(glmer_h6_interaction_rc)
+```
+
+# Hypothesis 7: Detectable Sender Specificity
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, to a greater extent for lie judgments than truth
+judgments, specifically for more detectable senders.*
+
+```{r}
+lrt_h7
+```
+
+```{r}
+summary(glmer_h7_base)
+```
+
+```{r}
+summary(glmer_h7_interaction)
+```
+
+## Robustness check: Controlling for judgments per sender
+
+```{r}
+lrt_h7_rc
+```
+
+```{r}
+summary(glmer_h7_base_rc)
+```
+
+```{r}
+summary(glmer_h7_interaction_rc)
+```
+
+## Robustness check: Split groups of studies
+
+```{r}
+lrt_h7_real
+```
+
+```{r}
+summary(glmer_h2_real)
+```
+
+```{r}
+summary(glmer_h7_base_real)
+```
+
+```{r}
+summary(glmer_h7_interaction_real)
+```
+
+
+```{r}
+lrt_h7_mock
+```
+
+```{r}
+summary(glmer_h2_mock)
+```
+
+```{r}
+summary(glmer_h7_base_mock)
+```
+
+```{r}
+summary(glmer_h7_interaction_mock)
+```
+
+# Hypothesis 8: Capable Receiver Specificity
+
+*Confidence predicts deception detection accuracy, such that more confident
+judgments are more accurate, to a greater extent for lie judgments than truth
+judgments, specifically for receivers who tend to be more accurate.*
+
+```{r}
+lrt_h8
+```
+
+```{r}
+summary(glmer_h8_base)
+```
+
+```{r}
+summary(glmer_h8_interaction)
+```

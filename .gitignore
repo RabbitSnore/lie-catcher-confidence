@@ -41,3 +41,8 @@ vignettes/*.pdf
 # Data
 
 *.csv
+
+# Reports
+
+*.html
+/confidence_main-report_files/

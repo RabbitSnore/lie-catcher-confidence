@@ -11,7 +11,8 @@ packages <- c(
   "tidyr",
   "ggplot2",
   "readr",
-  "lme4"
+  "lme4",
+  "cowplot"
 )
 
 lapply(packages, library, character.only = TRUE)

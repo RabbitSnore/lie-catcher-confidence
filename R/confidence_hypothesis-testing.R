@@ -44,6 +44,12 @@ judgment_bias <- raw_judgment %>%
     lie_judgment = sum(judgment) / n()
   )
 
+judgment_bias_study <- raw_judgment %>% 
+  group_by(study) %>% 
+  summarise(
+    lie_judgment = sum(judgment) / n()
+  )
+
 # Confidence and accuracy
 
 ## Overall
@@ -62,7 +68,7 @@ ggplot(confidence_table,
        aes(
          x     = confidence, 
          y     = accuracy,
-         shape = as.factor(judgment)
+         color = as.factor(judgment)
        )) +
   geom_point() +
   geom_errorbar(
@@ -73,7 +79,9 @@ ggplot(confidence_table,
     width = .25,
     alpha = .20
   ) +
-  geom_line() +
+  geom_line(
+    linewidth = 1
+  ) +
   scale_y_continuous(
     limits = c(0, 1),
     breaks = seq(0, 1, .05)
@@ -81,11 +89,12 @@ ggplot(confidence_table,
   scale_x_continuous(
     breaks = 1:7
   ) +
-  scale_shape_discrete(
-    labels = c("Truth", "Lie")
+  scale_color_manual(
+    labels = c("Truth", "Lie"),
+    values = c("#473198", "#AF3E4D")
   ) +
   labs(
-    shape = "Judgment",
+    color = "Judgment",
     y     = "Accuracy",
     x     = "Confidence"
   ) +
@@ -118,7 +127,7 @@ confidence_study_plot <-
          aes(
            x     = confidence, 
            y     = accuracy,
-           shape = as.factor(judgment)
+           color = as.factor(judgment)
          )) +
   facet_wrap(~ study, nrow = 2) +
   geom_point() +
@@ -130,19 +139,22 @@ confidence_study_plot <-
     width = .25,
     alpha = .20
   ) +
-  geom_line() +
+  geom_line(
+    linewidth = 1
+  ) +
   scale_y_continuous(
     limits = c(-0.01, 1.01),
-    breaks = seq(0, 1, .05)
+    breaks = seq(0, 1, .10)
   ) +
   scale_x_continuous(
     breaks = 1:7
   ) +
-  scale_shape_discrete(
-    labels = c("Truth", "Lie")
+  scale_color_manual(
+    labels = c("Truth", "Lie"),
+    values = c("#473198", "#AF3E4D")
   ) +
   labs(
-    shape = "Judgment",
+    color = "Judgment",
     y     = "Accuracy",
     x     = "Confidence"
   ) +
@@ -300,7 +312,10 @@ glmer_h1 <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 # Signal-Present Judgment Specificity: Confidence predicts deception detection
 # accuracy, such that more confident judgments are more accurate, to a greater
@@ -315,7 +330,10 @@ glmer_h2_base <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h2_interaction <-
   glmer(accuracy ~ 
@@ -326,7 +344,10 @@ glmer_h2_interaction <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h2 <- anova(glmer_h2_base, glmer_h2_interaction)
 
@@ -344,7 +365,10 @@ glmer_h3_base <-
         + (1 + confidence_centered + judgment | sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h3_interaction <-
   glmer(accuracy ~ 
@@ -358,7 +382,10 @@ glmer_h3_interaction <-
            + confidence_centered:judgment | sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h3 <- anova(glmer_h2_interaction, glmer_h3_base, glmer_h3_interaction)
 
@@ -376,7 +403,10 @@ glmer_h4_base <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h4_interaction <-
   glmer(accuracy ~ 
@@ -390,7 +420,10 @@ glmer_h4_interaction <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h4 <- anova(glmer_h2_interaction, glmer_h4_base, glmer_h4_interaction)
 
@@ -408,7 +441,10 @@ glmer_h5_base <-
         + (1|sender)
         + (1 + confidence_centered + judgment | receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h5_interaction <-
   glmer(accuracy ~ 
@@ -422,7 +458,10 @@ glmer_h5_interaction <-
            + judgment 
            + confidence_centered:judgment | receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h5 <- anova(glmer_h2_interaction, glmer_h5_base, glmer_h5_interaction)
 
@@ -441,7 +480,10 @@ glmer_h6_base <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h6_interaction <-
   glmer(accuracy ~ 
@@ -453,7 +495,10 @@ glmer_h6_interaction <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h6 <- anova(glmer_h2_interaction, glmer_h6_base, glmer_h6_interaction)
 
@@ -470,7 +515,10 @@ glmer_h6_base_rc <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h6_interaction_rc <-
   glmer(accuracy ~ 
@@ -483,7 +531,10 @@ glmer_h6_interaction_rc <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h6_rc <- anova(glmer_h2_interaction, glmer_h6_base_rc, glmer_h6_interaction_rc)
 
@@ -502,7 +553,10 @@ glmer_h7_base <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h7_interaction <-
   glmer(accuracy ~ 
@@ -514,7 +568,10 @@ glmer_h7_interaction <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h7 <- anova(glmer_h2_interaction, glmer_h7_base, glmer_h7_interaction)
 
@@ -531,7 +588,10 @@ glmer_h7_base_rc <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h7_interaction_rc <-
   glmer(accuracy ~ 
@@ -544,7 +604,10 @@ glmer_h7_interaction_rc <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h7_rc <- anova(glmer_h2_interaction, glmer_h7_base_rc, glmer_h7_interaction_rc)
 
@@ -559,7 +622,10 @@ glmer_h2_mock <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = filter(judgment, study != "press_conf"))
+        data = filter(judgment, study != "press_conf"),
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h2_real <-
   glmer(accuracy ~ 
@@ -570,7 +636,10 @@ glmer_h2_real <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data =filter(judgment, study == "press_conf"))
+        data =filter(judgment, study == "press_conf"),
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 ### Mock crimes
 
@@ -584,7 +653,10 @@ glmer_h7_base_mock <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = filter(judgment, study != "press_conf"))
+        data = filter(judgment, study != "press_conf"),
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h7_interaction_mock <-
   glmer(accuracy ~ 
@@ -596,7 +668,10 @@ glmer_h7_interaction_mock <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = filter(judgment, study != "press_conf"))
+        data = filter(judgment, study != "press_conf"),
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h7_mock <- anova(glmer_h2_mock, glmer_h7_base_mock, glmer_h7_interaction_mock)
 
@@ -608,10 +683,14 @@ glmer_h7_base_real <-
         + confidence_centered
         * judgment
         + detectability_study_centered
+        + (1|study:sender)
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = filter(judgment, study == "press_conf"))
+        data = filter(judgment, study == "press_conf"),
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h7_interaction_real <-
   glmer(accuracy ~ 
@@ -619,10 +698,14 @@ glmer_h7_interaction_real <-
         + confidence_centered
         * judgment
         * detectability_sender_centered
+        + (1|study:sender)
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = filter(judgment, study == "press_conf"))
+        data = filter(judgment, study == "press_conf"),
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h7_real <- anova(glmer_h2_real, glmer_h7_base_real, glmer_h7_interaction_real)
 
@@ -641,7 +724,10 @@ glmer_h8_base <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 glmer_h8_interaction <-
   glmer(accuracy ~ 
@@ -653,6 +739,61 @@ glmer_h8_interaction <-
         + (1|sender)
         + (1|receiver),
         family = binomial(link = "logit"),
-        data = judgment)
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
 
 lrt_h8 <- anova(glmer_h2_interaction, glmer_h8_base, glmer_h8_interaction)
+
+# Save fitted model objects ----------------------------------------------------
+
+models_export <- list(
+  "glmer_h1",
+  "glmer_h2_base",
+  "glmer_h2_interaction",
+  "glmer_h3_base",
+  "glmer_h3_interaction",
+  "glmer_h4_base",
+  "glmer_h4_interaction",
+  "glmer_h5_base",
+  "glmer_h5_interaction",
+  "glmer_h6_base",
+  "glmer_h6_interaction",
+  "glmer_h6_base_rc",
+  "glmer_h6_interaction_rc",
+  "glmer_h7_base",
+  "glmer_h7_interaction",
+  "glmer_h7_base_real",
+  "glmer_h7_interaction_real",
+  "glmer_h7_base_mock",
+  "glmer_h7_interaction_mock",
+  "glmer_h7_base_rc",
+  "glmer_h7_interaction_rc",
+  "glmer_h8_base",
+  "glmer_h8_interaction"
+  )
+
+if (!dir.exists("./rda/")) {
+  
+  dir.create("./rda/")
+  
+}
+
+lapply(models_export,
+      function(x) {
+        save(list = x,
+             file = paste("./rda/", x, ".rda", sep = ""))
+      })
+
+# Export Figures ---------------------------------------------------------------
+
+if (!dir.exists("./figures/")) {
+  
+  dir.create("./figures/")
+  
+}
+
+save_plot("./figures/confidence_plot.png", confidence_plot)
+save_plot("./figures/confidence_study_plot.png", confidence_study_plot)
+save_plot("./figures/confidence_detectability_plot.png", confidence_detectability_plot_overall)
