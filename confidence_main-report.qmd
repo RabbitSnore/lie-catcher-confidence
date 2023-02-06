@@ -6,6 +6,7 @@ format: gfm
 ```{r, include = FALSE}
 source("./R/confidence_wrangle.R")
 source("./R/confidence_hypothesis-testing.R")
+source("./R/confidence_sdt.R")
 ```
 
 # Descriptives
@@ -36,7 +37,13 @@ accuracy_judgment %>%
   knitr::kable()
 ```
 
-# Bias
+```{r}
+sensitivity_table %>% 
+  knitr::kable()
+```
+
+
+# Judgment Bias
 
 ```{r}
 judgment_bias %>% 
@@ -48,6 +55,10 @@ judgment_bias_study %>%
   knitr::kable()
 ```
 
+```{r}
+bias_table %>% 
+  knitr::kable()
+```
 
 # Confidence
 

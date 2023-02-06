@@ -62,7 +62,16 @@ accuracy_judgment %>%
 |        0 | 0.3693108 |
 |        1 | 0.5583524 |
 
-# Bias
+``` r
+sensitivity_table %>% 
+  knitr::kable()
+```
+
+| mean_dprime | sd_dprime | median_dprime | min_dprime | max_dprime |
+|------------:|----------:|--------------:|-----------:|-----------:|
+|  -0.1996367 | 0.7491177 |    -0.2104284 |  -2.848228 |   1.911858 |
+
+# Judgment Bias
 
 ``` r
 judgment_bias %>% 
@@ -84,6 +93,15 @@ judgment_bias_study %>%
 | press_conf  |    0.5575000 |
 | sorochinski |    0.5066667 |
 | toomey      |    0.3333333 |
+
+``` r
+bias_table %>% 
+  knitr::kable()
+```
+
+| mean_beta |   sd_beta | median_beta |  min_beta | max_beta |
+|----------:|----------:|------------:|----------:|---------:|
+|   1.05596 | 0.3476433 |    1.011003 | 0.2957007 | 2.433473 |
 
 # Confidence
 
