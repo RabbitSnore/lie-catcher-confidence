@@ -17,6 +17,7 @@ source("./R/confidence_sdt.R")
 accuracy_overall %>% 
   knitr::kable()
 ```
+
 ```{r}
 accuracy_veracity %>% 
   knitr::kable()
@@ -42,7 +43,6 @@ sensitivity_table %>%
   knitr::kable()
 ```
 
-
 # Judgment Bias
 
 ```{r}
@@ -61,6 +61,15 @@ bias_table %>%
 ```
 
 # Confidence
+
+```{r}
+knitr::include_graphics("./figures/confidence_dist_plot.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/confidence_dist_study_plot.png")
+```
+
 
 ```{r}
 confidence_table

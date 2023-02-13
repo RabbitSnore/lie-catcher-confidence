@@ -52,7 +52,67 @@ judgment_bias_study <- raw_judgment %>%
 
 # Confidence and accuracy
 
-## Overall
+## Distribution of confidence
+
+confidence_dist <- 
+ggplot(judgment,
+       aes(
+         x = confidence
+       )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "darkgrey"
+    ) +
+  scale_x_continuous(
+    breaks = 1:7
+  ) +
+  labs(
+    x = "Confidence",
+    y = "Count"
+  ) +
+  theme_classic()
+
+### By Study
+
+confidence_study_table <- table(judgment$study, judgment$confidence)/rowSums(table(judgment$study, judgment$confidence))
+
+confidence_study_table <- as.data.frame(confidence_study_table)
+
+colnames(confidence_study_table) <- c("study", "confidence", "prop")
+
+confidence_study_table <- confidence_study_table %>% 
+  mutate(
+    study = case_when(
+      study == "luke"        ~ "Luke et al. (2014)",
+      study == "sorochinski" ~ "Sorochinski et al (2014)",
+      study == "toomey"      ~ "Toomey (2013)",
+      study == "press_conf"  ~ "Vrij & Mann (2001)"
+    )
+  )
+
+confidence_dist_study <- 
+  ggplot(confidence_study_table,
+         aes(
+           x = as.numeric(confidence),
+           y = prop
+         )) +
+  facet_wrap(~ study, nrow = 2) +
+  geom_col(
+    color = "black",
+    fill  = "darkgrey",
+    width = 1
+  ) +
+  scale_x_continuous(
+    breaks = 1:7
+  ) +
+  labs(
+    x = "Confidence",
+    y = "Proportion of Responses"
+  ) +
+  theme_classic()
+
+## Confidence by Accuracy, Overall
 
 confidence_table <- judgment %>% 
   group_by(judgment, confidence) %>% 
@@ -808,6 +868,12 @@ if (!dir.exists("./figures/")) {
   
 }
 
+save_plot("./figures/confidence_dist_plot.png", 
+          confidence_dist, 
+          base_width = 8, base_height = 5)
+save_plot("./figures/confidence_dist_study_plot.png", 
+          confidence_dist_study, 
+          base_width = 9, base_height = 6)
 save_plot("./figures/confidence_plot.png", 
           confidence_plot, 
           base_width = 6, base_height = 4)
