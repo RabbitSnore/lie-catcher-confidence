@@ -139,6 +139,13 @@ ggplot(confidence_table,
     width = .25,
     alpha = .20
   ) +
+  geom_hline(
+    yintercept = .50,
+    linetype   = "solid",
+    alpha      = .25,
+    color      = "grey",
+    linewidth  = .80
+  ) +
   geom_line(
     linewidth = 1
   ) +
@@ -301,6 +308,15 @@ sender_detect_table <- raw_judgment %>%
     detectability_bin = cut_number(detectability_sender, 2)
   )
 
+detectability_means <- judgment %>% 
+  mutate(
+    detectability_bin = cut_number(detectability_sender, 2)
+  ) %>% 
+  group_by(detectability_bin) %>% 
+  summarise(
+    mean = mean(accuracy)
+  )
+
 confidence_detectability_plot_overall <- 
   ggplot(detectability_table,
          aes(
@@ -318,6 +334,22 @@ confidence_detectability_plot_overall <-
     ),
     width = .25,
     alpha = .20
+  ) +
+  geom_hline(
+    data = detectability_means,
+    aes(
+      yintercept = mean
+    ),
+    linetype   = "dotted",
+    alpha      = .10,
+    linewidth  = .80
+  ) +
+  geom_hline(
+    yintercept = .50,
+    linetype   = "solid",
+    alpha      = .25,
+    color      = "grey",
+    linewidth  = .80
   ) +
   geom_line(
     linewidth = 1

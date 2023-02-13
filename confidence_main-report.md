@@ -109,13 +109,13 @@ bias_table %>%
 knitr::include_graphics("./figures/confidence_dist_plot.png")
 ```
 
-![](./figures/confidence_dist_plot.png)
+<img src="./figures/confidence_dist_plot.png" width="2400" />
 
 ``` r
 knitr::include_graphics("./figures/confidence_dist_study_plot.png")
 ```
 
-![](./figures/confidence_dist_study_plot.png)
+<img src="./figures/confidence_dist_study_plot.png" width="2700" />
 
 ``` r
 confidence_table
@@ -144,7 +144,7 @@ confidence_table
 knitr::include_graphics("./figures/confidence_plot.png")
 ```
 
-![](./figures/confidence_plot.png)
+<img src="./figures/confidence_plot.png" width="1800" />
 
 ## By Study
 
@@ -214,7 +214,7 @@ confidence_study_table %>%
 knitr::include_graphics("./figures/confidence_study_plot.png")
 ```
 
-![](./figures/confidence_study_plot.png)
+<img src="./figures/confidence_study_plot.png" width="2700" />
 
 ## By Sender Detectability
 
@@ -222,7 +222,7 @@ knitr::include_graphics("./figures/confidence_study_plot.png")
 knitr::include_graphics("./figures/confidence_detectability_plot.png")
 ```
 
-![](./figures/confidence_detectability_plot.png)
+<img src="./figures/confidence_detectability_plot.png" width="2400" />
 
 # Hypothesis 1: General Confidence-Accuracy Relationship
 
@@ -254,8 +254,8 @@ summary(glmer_h1)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.04279  0.2069  
-     sender       (Intercept) 0.29233  0.5407  
-     study:sender (Intercept) 0.17233  0.4151  
+     sender       (Intercept) 0.29227  0.5406  
+     study:sender (Intercept) 0.17239  0.4152  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
@@ -318,14 +318,14 @@ summary(glmer_h2_base)
 
     Random effects:
      Groups       Name        Variance Std.Dev.
-     receiver     (Intercept) 0.007447 0.08629 
-     sender       (Intercept) 0.417382 0.64605 
-     study:sender (Intercept) 0.315142 0.56137 
+     receiver     (Intercept) 0.007446 0.08629 
+     sender       (Intercept) 0.316195 0.56231 
+     study:sender (Intercept) 0.416327 0.64523 
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                         Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)         -0.58381    0.14819  -3.940 8.16e-05 ***
+    (Intercept)         -0.58380    0.14819  -3.940 8.16e-05 ***
     confidence_centered -0.03506    0.03849  -0.911    0.362    
     judgment             1.16863    0.11640  10.040  < 2e-16 ***
     ---
@@ -361,14 +361,14 @@ summary(glmer_h2_interaction)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.02244  0.1498  
-     sender       (Intercept) 0.37744  0.6144  
-     study:sender (Intercept) 0.35161  0.5930  
+     sender       (Intercept) 0.37820  0.6150  
+     study:sender (Intercept) 0.35086  0.5923  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                  Estimate Std. Error z value Pr(>|z|)    
     (Intercept)                  -0.57128    0.14854  -3.846 0.000120 ***
-    confidence_centered           0.11494    0.05772   1.992 0.046425 *  
+    confidence_centered           0.11494    0.05772   1.991 0.046426 *  
     judgment                      1.15165    0.11688   9.854  < 2e-16 ***
     confidence_centered:judgment -0.27890    0.07892  -3.534 0.000409 ***
     ---
@@ -380,8 +380,8 @@ summary(glmer_h2_interaction)
     judgment    -0.371 -0.037       
     cnfdnc_cnt: -0.013 -0.731  0.012
     optimizer (bobyqa) convergence code: 0 (OK)
-    Model is nearly unidentifiable: large eigenvalue ratio
-     - Rescale variables?
+    unable to evaluate scaled gradient
+    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
 
 # Hypothesis 3: Variation Across Senders
 
@@ -401,14 +401,14 @@ lrt_h3
     glmer_h2_interaction: accuracy ~ 1 + confidence_centered * judgment + (1 | study:sender) + (1 | sender) + (1 | receiver)
     glmer_h3_base: accuracy ~ 1 + confidence_centered * judgment + (1 | study:sender) + (1 + confidence_centered + judgment | sender) + (1 | receiver)
     glmer_h3_interaction: accuracy ~ 1 + confidence_centered * judgment + (1 | study:sender) + (1 + confidence_centered + judgment + confidence_centered:judgment | sender) + (1 | receiver)
-                         npar     AIC     BIC   logLik deviance  Chisq Df
-    glmer_h2_interaction    7 2058.45 2096.28 -1022.22  2044.45          
-    glmer_h3_base          12  127.61  192.46   -51.80   103.61 1940.8  5
-    glmer_h3_interaction   16  159.49  245.96   -63.74   127.49    0.0  4
+                         npar     AIC     BIC   logLik deviance     Chisq Df
+    glmer_h2_interaction    7 2058.45 2096.28 -1022.22  2044.45             
+    glmer_h3_base          12  135.00  199.85   -55.50   111.00 1933.4450  5
+    glmer_h3_interaction   16  138.05  224.52   -53.02   106.05    4.9534  4
                          Pr(>Chisq)    
     glmer_h2_interaction               
     glmer_h3_base            <2e-16 ***
-    glmer_h3_interaction          1    
+    glmer_h3_interaction     0.2921    
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -425,45 +425,48 @@ summary(glmer_h3_base)
     Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e+05))
 
          AIC      BIC   logLik deviance df.resid 
-       127.6    192.5    -51.8    103.6     1631 
+       135.0    199.9    -55.5    111.0     1631 
 
     Scaled residuals: 
           Min        1Q    Median        3Q       Max 
-    -0.012769 -0.001234 -0.000003  0.000281  0.152725 
+    -0.076533 -0.000130  0.000000  0.000021  0.306333 
 
     Random effects:
      Groups       Name                Variance  Std.Dev.  Corr       
-     receiver     (Intercept)         4.671e-07 6.835e-04            
-     sender       (Intercept)         1.228e+03 3.504e+01            
-                  confidence_centered 2.703e+01 5.199e+00 -1.00      
-                  judgment            9.994e+03 9.997e+01 -0.98  0.98
-     study:sender (Intercept)         6.522e+00 2.554e+00            
+     receiver     (Intercept)         1.090e-03 3.301e-02            
+     sender       (Intercept)         5.633e+02 2.373e+01            
+                  confidence_centered 4.675e+01 6.837e+00 -1.00      
+                  judgment            1.256e+04 1.121e+02 -0.94  0.94
+     study:sender (Intercept)         1.971e-06 1.404e-03            
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
-                                   Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -11.442714   0.001234 -9269.4   <2e-16 ***
-    confidence_centered            0.925775   0.001235   749.6   <2e-16 ***
-    judgment                      27.764384   0.001234 22500.5   <2e-16 ***
-    confidence_centered:judgment   0.169340   0.001234   137.3   <2e-16 ***
+                                  Estimate Std. Error z value Pr(>|z|)    
+    (Intercept)                  -9.837277   0.001282   -7671   <2e-16 ***
+    confidence_centered           2.408938   0.001283    1878   <2e-16 ***
+    judgment                     23.319161   0.001385   16837   <2e-16 ***
+    confidence_centered:judgment -2.654090   0.001360   -1952   <2e-16 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Correlation of Fixed Effects:
                 (Intr) cnfdn_ jdgmnt
-    cnfdnc_cntr 0.001               
+    cnfdnc_cntr 0.000               
     judgment    0.000  0.000        
-    cnfdnc_cnt: 0.000  0.000  0.000 
+    cnfdnc_cnt: 0.000  0.000  0.218 
     optimizer (bobyqa) convergence code: 0 (OK)
-    Model failed to converge with max|grad| = 0.0592429 (tol = 0.002, component 1)
-    Model is nearly unidentifiable: very large eigenvalue
-     - Rescale variables?
-    Model is nearly unidentifiable: large eigenvalue ratio
-     - Rescale variables?
+    unable to evaluate scaled gradient
+    Model failed to converge: degenerate  Hessian with 2 negative eigenvalues
 
 ``` r
 summary(glmer_h3_interaction)
 ```
+
+    Warning in vcov.merMod(object, use.hessian = use.hessian): variance-covariance matrix computed from finite-difference Hessian is
+    not positive definite or contains NA values: falling back to var-cov estimated from RX
+
+    Warning in vcov.merMod(object, correlation = correlation, sigm = sig): variance-covariance matrix computed from finite-difference Hessian is
+    not positive definite or contains NA values: falling back to var-cov estimated from RX
 
     Generalized linear mixed model fit by maximum likelihood (Laplace
       Approximation) [glmerMod]
@@ -475,39 +478,39 @@ summary(glmer_h3_interaction)
     Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e+05))
 
          AIC      BIC   logLik deviance df.resid 
-       159.5    246.0    -63.7    127.5     1627 
+       138.0    224.5    -53.0    106.0     1627 
 
     Scaled residuals: 
-         Min       1Q   Median       3Q      Max 
-    -0.39992 -0.00002  0.00000  0.00044  0.31414 
+          Min        1Q    Median        3Q       Max 
+    -0.024016 -0.000785  0.000000  0.000197  0.214335 
 
     Random effects:
      Groups       Name                         Variance  Std.Dev. Corr             
-     receiver     (Intercept)                  2.892e-04  0.01701                  
-     sender       (Intercept)                  3.262e+03 57.11318                  
-                  confidence_centered          3.464e+00  1.86109 -1.00            
-                  judgment                     6.423e+03 80.14380 -1.00  1.00      
-                  confidence_centered:judgment 9.663e+00  3.10852 -1.00  1.00  1.00
-     study:sender (Intercept)                  6.096e-04  0.02469                  
+     receiver     (Intercept)                  4.294e-02   0.2072                  
+     sender       (Intercept)                  8.174e+02  28.5908                  
+                  confidence_centered          3.913e+01   6.2552 -1.00            
+                  judgment                     1.325e+04 115.1029 -1.00  1.00      
+                  confidence_centered:judgment 1.174e+02  10.8349 -0.08  0.09  0.06
+     study:sender (Intercept)                  6.899e+00   2.6265                  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
-                                   Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -1.9610482  0.0007652 -2562.8   <2e-16 ***
-    confidence_centered           0.1046106  0.0007652   136.7   <2e-16 ***
-    judgment                      3.6843555  0.0007652  4815.1   <2e-16 ***
-    confidence_centered:judgment  0.0992634  0.0007652   129.7   <2e-16 ***
+                                 Estimate Std. Error z value Pr(>|z|)  
+    (Intercept)                   -10.250      6.141  -1.669   0.0951 .
+    confidence_centered             1.365      2.863   0.477   0.6336  
+    judgment                       24.143    123.909   0.195   0.8455  
+    confidence_centered:judgment   -1.259     73.664  -0.017   0.9864  
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Correlation of Fixed Effects:
                 (Intr) cnfdn_ jdgmnt
-    cnfdnc_cntr 0.000               
-    judgment    0.000  0.000        
-    cnfdnc_cnt: 0.000  0.000  0.000 
+    cnfdnc_cntr -0.865              
+    judgment    -0.062  0.050       
+    cnfdnc_cnt:  0.035 -0.040  0.216
     optimizer (bobyqa) convergence code: 0 (OK)
     unable to evaluate scaled gradient
-    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+    Model failed to converge: degenerate  Hessian with 2 negative eigenvalues
 
 # Hypothesis 4: Variation Across Contexts
 
@@ -527,14 +530,14 @@ lrt_h4
     glmer_h2_interaction: accuracy ~ 1 + confidence_centered * judgment + (1 | study:sender) + (1 | sender) + (1 | receiver)
     glmer_h4_base: accuracy ~ 1 + confidence_centered * judgment + (1 + confidence_centered + judgment | study:sender) + (1 | sender) + (1 | receiver)
     glmer_h4_interaction: accuracy ~ 1 + confidence_centered * judgment + (1 + confidence_centered + judgment + confidence_centered:judgment | study:sender) + (1 | sender) + (1 | receiver)
-                         npar     AIC     BIC   logLik deviance    Chisq Df
-    glmer_h2_interaction    7 2058.45 2096.28 -1022.22  2044.45            
-    glmer_h4_base          12  144.45  209.30   -60.23   120.45 1923.994  5
-    glmer_h4_interaction   16  134.66  221.13   -51.33   102.66   17.789  4
+                         npar     AIC     BIC   logLik deviance     Chisq Df
+    glmer_h2_interaction    7 2058.45 2096.28 -1022.22  2044.45             
+    glmer_h4_base          12  128.98  193.83   -52.49   104.98 1939.4704  5
+    glmer_h4_interaction   16  135.94  222.41   -51.97   103.94    1.0374  4
                          Pr(>Chisq)    
     glmer_h2_interaction               
-    glmer_h4_base         < 2.2e-16 ***
-    glmer_h4_interaction   0.001357 ** 
+    glmer_h4_base            <2e-16 ***
+    glmer_h4_interaction     0.9041    
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -552,45 +555,49 @@ summary(glmer_h4_base)
     Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e+05))
 
          AIC      BIC   logLik deviance df.resid 
-       144.5    209.3    -60.2    120.5     1631 
+       129.0    193.8    -52.5    105.0     1631 
 
     Scaled residuals: 
-         Min       1Q   Median       3Q      Max 
-    -0.18458 -0.00005  0.00000  0.00000  0.34073 
+          Min        1Q    Median        3Q       Max 
+    -0.017730 -0.002104 -0.000001  0.000137  0.208652 
 
     Random effects:
      Groups       Name                Variance  Std.Dev.  Corr       
-     receiver     (Intercept)         4.823e-06 2.196e-03            
-     sender       (Intercept)         6.934e-07 8.327e-04            
-     study:sender (Intercept)         5.244e+02 2.290e+01            
-                  confidence_centered 5.933e+01 7.702e+00 -1.00      
-                  judgment            8.064e+03 8.980e+01 -0.95  0.95
+     receiver     (Intercept)         8.650e-06  0.002941            
+     sender       (Intercept)         4.121e+00  2.029992            
+     study:sender (Intercept)         1.028e+03 32.065735            
+                  confidence_centered 1.559e+01  3.948561  1.00      
+                  judgment            8.778e+03 93.688906 -1.00 -1.00
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                    Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -5.0459975  0.0007160   -7047   <2e-16 ***
-    confidence_centered           1.3955894  0.0007161    1949   <2e-16 ***
-    judgment                     11.8637729  0.0007159   16571   <2e-16 ***
-    confidence_centered:judgment -1.2611445  0.0007160   -1761   <2e-16 ***
+    (Intercept)                  -11.229030   0.001493 -7522.4   <2e-16 ***
+    confidence_centered           -0.603841   0.001494  -404.1   <2e-16 ***
+    judgment                      29.020432   0.001492 19448.3   <2e-16 ***
+    confidence_centered:judgment  -0.448222   0.001492  -300.4   <2e-16 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Correlation of Fixed Effects:
                 (Intr) cnfdn_ jdgmnt
-    cnfdnc_cntr -0.006              
-    judgment     0.005 -0.005       
-    cnfdnc_cnt:  0.006 -0.006  0.006
+    cnfdnc_cntr -0.001              
+    judgment     0.001 -0.001       
+    cnfdnc_cnt: -0.001  0.001 -0.001
     optimizer (bobyqa) convergence code: 0 (OK)
-    Model failed to converge with max|grad| = 0.103935 (tol = 0.002, component 1)
-    Model is nearly unidentifiable: very large eigenvalue
-     - Rescale variables?
+    Model failed to converge with max|grad| = 0.0476958 (tol = 0.002, component 1)
     Model is nearly unidentifiable: large eigenvalue ratio
      - Rescale variables?
 
 ``` r
 summary(glmer_h4_interaction)
 ```
+
+    Warning in vcov.merMod(object, use.hessian = use.hessian): variance-covariance matrix computed from finite-difference Hessian is
+    not positive definite or contains NA values: falling back to var-cov estimated from RX
+
+    Warning in vcov.merMod(object, correlation = correlation, sigm = sig): variance-covariance matrix computed from finite-difference Hessian is
+    not positive definite or contains NA values: falling back to var-cov estimated from RX
 
     Generalized linear mixed model fit by maximum likelihood (Laplace
       Approximation) [glmerMod]
@@ -603,46 +610,44 @@ summary(glmer_h4_interaction)
     Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e+05))
 
          AIC      BIC   logLik deviance df.resid 
-       134.7    221.1    -51.3    102.7     1627 
+       135.9    222.4    -52.0    103.9     1627 
 
     Scaled residuals: 
           Min        1Q    Median        3Q       Max 
-    -0.012010 -0.001435  0.000000  0.000284  0.175914 
+    -0.027651 -0.000252  0.000000  0.000124  0.212785 
 
     Random effects:
      Groups       Name                         Variance  Std.Dev.  Corr       
-     receiver     (Intercept)                  3.031e-08 1.741e-04            
-     sender       (Intercept)                  2.974e-06 1.724e-03            
-     study:sender (Intercept)                  1.977e+03 4.447e+01            
-                  confidence_centered          3.807e+01 6.170e+00  1.00      
-                  judgment                     1.345e+04 1.160e+02 -1.00 -1.00
-                  confidence_centered:judgment 4.385e+01 6.622e+00 -0.71 -0.71
+     receiver     (Intercept)                  3.865e-04   0.01966            
+     sender       (Intercept)                  3.369e-02   0.18355            
+     study:sender (Intercept)                  1.222e+03  34.96010            
+                  confidence_centered          8.421e+01   9.17680 -1.00      
+                  judgment                     1.316e+04 114.71474 -1.00  1.00
+                  confidence_centered:judgment 1.504e+02  12.26175  0.23 -0.21
           
           
           
           
           
           
-      0.69
+     -0.26
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
-                                   Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -12.184208   0.001295 -9408.3   <2e-16 ***
-    confidence_centered           -0.726563   0.001309  -554.9   <2e-16 ***
-    judgment                      27.716731   0.001289 21506.1   <2e-16 ***
-    confidence_centered:judgment   0.545988   0.001287   424.3   <2e-16 ***
-    ---
-    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+                                 Estimate Std. Error z value Pr(>|z|)
+    (Intercept)                   -11.190      8.413  -1.330    0.183
+    confidence_centered             1.952      4.113   0.475    0.635
+    judgment                       25.920    143.725   0.180    0.857
+    confidence_centered:judgment   -2.366     68.742  -0.034    0.973
 
     Correlation of Fixed Effects:
                 (Intr) cnfdn_ jdgmnt
-    cnfdnc_cntr -0.006              
-    judgment     0.002 -0.002       
-    cnfdnc_cnt:  0.000  0.000  0.000
+    cnfdnc_cntr -0.926              
+    judgment    -0.081  0.072       
+    cnfdnc_cnt:  0.081 -0.082  0.114
     optimizer (bobyqa) convergence code: 0 (OK)
     unable to evaluate scaled gradient
-    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+    Model failed to converge: degenerate  Hessian with 5 negative eigenvalues
 
 # Hypothesis 5: Variation Across Receivers
 
@@ -690,11 +695,11 @@ summary(glmer_h5_base)
 
     Random effects:
      Groups       Name                Variance  Std.Dev. Corr       
-     receiver     (Intercept)         0.0262373 0.16198             
+     receiver     (Intercept)         0.0262370 0.16198             
                   confidence_centered 0.0001842 0.01357  -1.00      
                   judgment            0.0002303 0.01518  -1.00  1.00
-     sender       (Intercept)         0.3939081 0.62762             
-     study:sender (Intercept)         0.3342627 0.57815             
+     sender       (Intercept)         0.3930136 0.62691             
+     study:sender (Intercept)         0.3351573 0.57893             
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
@@ -736,12 +741,12 @@ summary(glmer_h5_interaction)
 
     Random effects:
      Groups       Name                         Variance  Std.Dev. Corr             
-     receiver     (Intercept)                  2.728e-02 0.165159                  
-                  confidence_centered          5.221e-06 0.002285 -1.00            
-                  judgment                     2.099e-04 0.014489 -1.00  1.00      
+     receiver     (Intercept)                  2.728e-02 0.165156                  
+                  confidence_centered          5.223e-06 0.002285 -1.00            
+                  judgment                     2.099e-04 0.014488 -1.00  1.00      
                   confidence_centered:judgment 2.548e-04 0.015963 -1.00  1.00  1.00
-     sender       (Intercept)                  3.553e-01 0.596064                  
-     study:sender (Intercept)                  3.730e-01 0.610713                  
+     sender       (Intercept)                  3.547e-01 0.595592                  
+     study:sender (Intercept)                  3.735e-01 0.611173                  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
@@ -817,16 +822,16 @@ summary(glmer_h6_base)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.02509  0.1584  
-     sender       (Intercept) 0.33048  0.5749  
-     study:sender (Intercept) 0.29327  0.5415  
+     sender       (Intercept) 0.41982  0.6479  
+     study:sender (Intercept) 0.20393  0.4516  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                  Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -0.59548    0.14327  -4.156 3.24e-05 ***
+    (Intercept)                  -0.59548    0.14327  -4.156 3.23e-05 ***
     confidence_centered           0.11528    0.05772   1.997 0.045800 *  
     judgment                      1.15865    0.11677   9.923  < 2e-16 ***
-    detectability_study_centered  6.32442    2.57634   2.455 0.014096 *  
+    detectability_study_centered  6.32443    2.57116   2.460 0.013903 *  
     confidence_centered:judgment -0.28361    0.07891  -3.594 0.000325 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -835,7 +840,7 @@ summary(glmer_h6_base)
                 (Intr) cnfdn_ jdgmnt dtct__
     cnfdnc_cntr  0.008                     
     judgment    -0.393 -0.036              
-    dtctblty_s_ -0.076  0.005  0.071       
+    dtctblty_s_ -0.075  0.005  0.071       
     cnfdnc_cnt: -0.011 -0.730  0.011 -0.030
     optimizer (bobyqa) convergence code: 0 (OK)
     unable to evaluate scaled gradient
@@ -859,34 +864,34 @@ summary(glmer_h6_interaction)
 
     Scaled residuals: 
         Min      1Q  Median      3Q     Max 
-    -2.5129 -0.7643 -0.4150  0.7456  4.8137 
+    -2.5129 -0.7643 -0.4150  0.7456  4.8138 
 
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.02177  0.1475  
-     sender       (Intercept) 0.27063  0.5202  
-     study:sender (Intercept) 0.33907  0.5823  
+     sender       (Intercept) 0.30903  0.5559  
+     study:sender (Intercept) 0.30066  0.5483  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                                                Estimate Std. Error
     (Intercept)                                                -0.51521    0.14478
     confidence_centered                                         0.15038    0.06471
-    judgment                                                    0.87009    0.13495
-    detectability_study_centered                               12.53097    3.04883
-    confidence_centered:judgment                               -0.24176    0.09423
-    confidence_centered:detectability_study_centered            1.88756    1.60504
-    judgment:detectability_study_centered                     -13.23034    3.33315
-    confidence_centered:judgment:detectability_study_centered   0.76850    2.35608
+    judgment                                                    0.87009    0.13488
+    detectability_study_centered                               12.53119    3.04651
+    confidence_centered:judgment                               -0.24176    0.09425
+    confidence_centered:detectability_study_centered            1.88755    1.60457
+    judgment:detectability_study_centered                     -13.23064    3.32650
+    confidence_centered:judgment:detectability_study_centered   0.76851    2.35734
                                                               z value Pr(>|z|)    
     (Intercept)                                                -3.559 0.000373 ***
-    confidence_centered                                         2.324 0.020134 *  
-    judgment                                                    6.448 1.14e-10 ***
-    detectability_study_centered                                4.110 3.96e-05 ***
-    confidence_centered:judgment                               -2.566 0.010296 *  
-    confidence_centered:detectability_study_centered            1.176 0.239588    
-    judgment:detectability_study_centered                      -3.969 7.21e-05 ***
-    confidence_centered:judgment:detectability_study_centered   0.326 0.744291    
+    confidence_centered                                         2.324 0.020128 *  
+    judgment                                                    6.451 1.11e-10 ***
+    detectability_study_centered                                4.113 3.90e-05 ***
+    confidence_centered:judgment                               -2.565 0.010313 *  
+    confidence_centered:detectability_study_centered            1.176 0.239453    
+    judgment:detectability_study_centered                      -3.977 6.97e-05 ***
+    confidence_centered:judgment:detectability_study_centered   0.326 0.744417    
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -894,14 +899,14 @@ summary(glmer_h6_interaction)
                 (Intr) cnfdn_ jdgmnt dtct__ cnfd_: cn_:__ jdg:__
     cnfdnc_cntr  0.022                                          
     judgment    -0.419 -0.044                                   
-    dtctblty_s_ -0.001  0.017 -0.217                            
-    cnfdnc_cnt: -0.024 -0.684 -0.029 -0.011                     
-    cnfdnc_c:__  0.012  0.436 -0.016  0.022 -0.301              
-    jdgmnt:dt__ -0.144 -0.024  0.498 -0.539 -0.041 -0.036       
-    cnfdnc_::__ -0.022 -0.296 -0.048 -0.008  0.530 -0.684 -0.035
+    dtctblty_s_ -0.001  0.018 -0.216                            
+    cnfdnc_cnt: -0.024 -0.684 -0.028 -0.012                     
+    cnfdnc_c:__  0.012  0.436 -0.017  0.024 -0.301              
+    jdgmnt:dt__ -0.144 -0.024  0.497 -0.538 -0.039 -0.037       
+    cnfdnc_::__ -0.023 -0.296 -0.047 -0.011  0.530 -0.684 -0.033
     optimizer (bobyqa) convergence code: 0 (OK)
-    unable to evaluate scaled gradient
-    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+    Model is nearly unidentifiable: large eigenvalue ratio
+     - Rescale variables?
 
 ``` r
 interactions_h6
@@ -992,12 +997,12 @@ lrt_h6_rc
     glmer_h6_interaction_rc: accuracy ~ 1 + confidence_centered * judgment * detectability_study_centered + n_judgments_study + (1 | study:sender) + (1 | sender) + (1 | receiver)
                             npar    AIC    BIC  logLik deviance   Chisq Df
     glmer_h2_interaction       7 2058.4 2096.3 -1022.2   2044.5           
-    glmer_h6_base_rc           9 2056.6 2105.2 -1019.3   2038.6  5.8529  2
-    glmer_h6_interaction_rc   12 2044.4 2109.2 -1010.2   2020.4 18.1911  3
+    glmer_h6_base_rc           9 2056.7 2105.3 -1019.3   2038.7  5.7712  2
+    glmer_h6_interaction_rc   12 2044.4 2109.2 -1010.2   2020.4 18.3054  3
                             Pr(>Chisq)    
     glmer_h2_interaction                  
-    glmer_h6_base_rc         0.0535864 .  
-    glmer_h6_interaction_rc  0.0004017 ***
+    glmer_h6_base_rc         0.0558207 .  
+    glmer_h6_interaction_rc  0.0003805 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1015,42 +1020,45 @@ summary(glmer_h6_base_rc)
     Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e+05))
 
          AIC      BIC   logLik deviance df.resid 
-      2056.6   2105.2  -1019.3   2038.6     1634 
+      2056.7   2105.3  -1019.3   2038.7     1634 
 
     Scaled residuals: 
         Min      1Q  Median      3Q     Max 
-    -2.5509 -0.7749 -0.4126  0.7541  4.7412 
+    -2.5152 -0.7808 -0.4130  0.7585  4.6541 
 
     Random effects:
      Groups       Name        Variance Std.Dev.
-     receiver     (Intercept) 0.02507  0.1583  
-     sender       (Intercept) 0.26902  0.5187  
-     study:sender (Intercept) 0.35412  0.5951  
+     receiver     (Intercept) 0.02335  0.1528  
+     sender       (Intercept) 0.35423  0.5952  
+     study:sender (Intercept) 0.26555  0.5153  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                    Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -5.715e-01  1.883e-01  -3.035 0.002403 ** 
-    confidence_centered           1.151e-01  5.773e-02   1.994 0.046154 *  
-    judgment                      1.159e+00  1.168e-01   9.925  < 2e-16 ***
-    detectability_study_centered  6.131e+00  2.755e+00   2.226 0.026047 *  
-    n_judgments_study            -6.422e-05  3.279e-04  -0.196 0.844715    
-    confidence_centered:judgment -2.833e-01  7.893e-02  -3.589 0.000332 ***
+    (Intercept)                  -5.532e-01  1.877e-01  -2.946 0.003215 ** 
+    confidence_centered           1.116e-01  5.754e-02   1.940 0.052403 .  
+    judgment                      1.130e+00  1.164e-01   9.707  < 2e-16 ***
+    detectability_study_centered  5.785e+00  2.746e+00   2.107 0.035113 *  
+    n_judgments_study            -7.496e-05  3.270e-04  -0.229 0.818697    
+    confidence_centered:judgment -2.775e-01  7.870e-02  -3.525 0.000423 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Correlation of Fixed Effects:
                 (Intr) cnfdn_ jdgmnt dtct__ n_jdg_
     cnfdnc_cntr -0.004                            
-    judgment    -0.291 -0.036                     
-    dtctblty_s_ -0.285  0.010  0.062              
-    n_jdgmnts_s -0.649  0.015 -0.015  0.357       
-    cnfdnc_cnt:  0.006 -0.730  0.011 -0.037 -0.023
+    judgment    -0.290 -0.038                     
+    dtctblty_s_ -0.284  0.010  0.057              
+    n_jdgmnts_s -0.649  0.015 -0.016  0.357       
+    cnfdnc_cnt:  0.006 -0.730  0.014 -0.036 -0.023
     fit warnings:
     Some predictor variables are on very different scales: consider rescaling
     optimizer (bobyqa) convergence code: 0 (OK)
-    unable to evaluate scaled gradient
-    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+    Model failed to converge with max|grad| = 0.358757 (tol = 0.002, component 1)
+    Model is nearly unidentifiable: very large eigenvalue
+     - Rescale variables?
+    Model is nearly unidentifiable: large eigenvalue ratio
+     - Rescale variables?
 
 ``` r
 summary(glmer_h6_interaction_rc)
@@ -1066,57 +1074,57 @@ summary(glmer_h6_interaction_rc)
     Control: glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e+05))
 
          AIC      BIC   logLik deviance df.resid 
-      2044.4   2109.3  -1010.2   2020.4     1631 
+      2044.4   2109.2  -1010.2   2020.4     1631 
 
     Scaled residuals: 
         Min      1Q  Median      3Q     Max 
-    -2.4777 -0.7684 -0.4157  0.7491  4.7631 
+    -2.4898 -0.7665 -0.4158  0.7467  4.8085 
 
     Random effects:
      Groups       Name        Variance Std.Dev.
-     receiver     (Intercept) 0.01991  0.1411  
-     sender       (Intercept) 0.29110  0.5395  
-     study:sender (Intercept) 0.31641  0.5625  
+     receiver     (Intercept) 0.01995  0.1412  
+     sender       (Intercept) 0.29149  0.5399  
+     study:sender (Intercept) 0.31481  0.5611  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                                                 Estimate Std. Error
-    (Intercept)                                               -4.997e-01  1.896e-01
-    confidence_centered                                        1.436e-01  6.448e-02
-    judgment                                                   8.549e-01  1.347e-01
-    detectability_study_centered                               1.203e+01  3.223e+00
-    n_judgments_study                                         -1.859e-05  3.265e-04
-    confidence_centered:judgment                              -2.358e-01  9.404e-02
-    confidence_centered:detectability_study_centered           1.698e+00  1.599e+00
-    judgment:detectability_study_centered                     -1.291e+01  3.326e+00
-    confidence_centered:judgment:detectability_study_centered  8.202e-01  2.354e+00
+    (Intercept)                                               -4.982e-01  1.896e-01
+    confidence_centered                                        1.461e-01  6.453e-02
+    judgment                                                   8.667e-01  1.349e-01
+    detectability_study_centered                               1.203e+01  3.222e+00
+    n_judgments_study                                         -2.746e-05  3.263e-04
+    confidence_centered:judgment                              -2.386e-01  9.408e-02
+    confidence_centered:detectability_study_centered           1.702e+00  1.600e+00
+    judgment:detectability_study_centered                     -1.291e+01  3.331e+00
+    confidence_centered:judgment:detectability_study_centered  8.240e-01  2.354e+00
                                                               z value Pr(>|z|)    
-    (Intercept)                                                -2.635 0.008412 ** 
-    confidence_centered                                         2.228 0.025898 *  
-    judgment                                                    6.345 2.22e-10 ***
-    detectability_study_centered                                3.732 0.000190 ***
-    n_judgments_study                                          -0.057 0.954599    
-    confidence_centered:judgment                               -2.507 0.012162 *  
-    confidence_centered:detectability_study_centered            1.062 0.288199    
-    judgment:detectability_study_centered                      -3.882 0.000104 ***
-    confidence_centered:judgment:detectability_study_centered   0.348 0.727509    
+    (Intercept)                                                -2.628 0.008597 ** 
+    confidence_centered                                         2.264 0.023589 *  
+    judgment                                                    6.427 1.31e-10 ***
+    detectability_study_centered                                3.733 0.000189 ***
+    n_judgments_study                                          -0.084 0.932927    
+    confidence_centered:judgment                               -2.536 0.011207 *  
+    confidence_centered:detectability_study_centered            1.064 0.287327    
+    judgment:detectability_study_centered                      -3.875 0.000106 ***
+    confidence_centered:judgment:detectability_study_centered   0.350 0.726290    
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
     Correlation of Fixed Effects:
                 (Intr) cnfdn_ jdgmnt dtct__ n_jdg_ cnfd_: cn_:__ jdg:__
     cnfdnc_cntr  0.011                                                 
-    judgment    -0.301 -0.045                                          
-    dtctblty_s_ -0.217  0.019 -0.216                                   
+    judgment    -0.300 -0.044                                          
+    dtctblty_s_ -0.216  0.019 -0.216                                   
     n_jdgmnts_s -0.648  0.008 -0.028  0.335                            
-    cnfdnc_cnt: -0.017 -0.684 -0.028 -0.011 -0.003                     
-    cnfdnc_c:__  0.015  0.436 -0.017  0.018 -0.007 -0.301              
-    jdgmnt:dt__ -0.086 -0.025  0.500 -0.518 -0.037 -0.040 -0.036       
-    cnfdnc_::__ -0.033 -0.296 -0.048 -0.001  0.023  0.531 -0.683 -0.035
+    cnfdnc_cnt: -0.017 -0.684 -0.028 -0.011 -0.002                     
+    cnfdnc_c:__  0.015  0.435 -0.017  0.018 -0.008 -0.300              
+    jdgmnt:dt__ -0.087 -0.025  0.500 -0.518 -0.037 -0.040 -0.036       
+    cnfdnc_::__ -0.033 -0.295 -0.048  0.000  0.024  0.530 -0.683 -0.035
     fit warnings:
     Some predictor variables are on very different scales: consider rescaling
     optimizer (bobyqa) convergence code: 0 (OK)
-    Model failed to converge with max|grad| = 0.279932 (tol = 0.002, component 1)
+    Model failed to converge with max|grad| = 0.115719 (tol = 0.002, component 1)
     Model is nearly unidentifiable: very large eigenvalue
      - Rescale variables?
     Model is nearly unidentifiable: large eigenvalue ratio
@@ -1177,16 +1185,16 @@ summary(glmer_h7_base)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.02509  0.1584  
-     sender       (Intercept) 0.33048  0.5749  
-     study:sender (Intercept) 0.29327  0.5415  
+     sender       (Intercept) 0.41982  0.6479  
+     study:sender (Intercept) 0.20393  0.4516  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                  Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -0.59548    0.14327  -4.156 3.24e-05 ***
+    (Intercept)                  -0.59548    0.14327  -4.156 3.23e-05 ***
     confidence_centered           0.11528    0.05772   1.997 0.045800 *  
     judgment                      1.15865    0.11677   9.923  < 2e-16 ***
-    detectability_study_centered  6.32442    2.57634   2.455 0.014096 *  
+    detectability_study_centered  6.32443    2.57116   2.460 0.013903 *  
     confidence_centered:judgment -0.28361    0.07891  -3.594 0.000325 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -1195,7 +1203,7 @@ summary(glmer_h7_base)
                 (Intr) cnfdn_ jdgmnt dtct__
     cnfdnc_cntr  0.008                     
     judgment    -0.393 -0.036              
-    dtctblty_s_ -0.076  0.005  0.071       
+    dtctblty_s_ -0.075  0.005  0.071       
     cnfdnc_cnt: -0.011 -0.730  0.011 -0.030
     optimizer (bobyqa) convergence code: 0 (OK)
     unable to evaluate scaled gradient
@@ -1224,8 +1232,8 @@ summary(glmer_h7_interaction)
     Random effects:
      Groups       Name        Variance  Std.Dev. 
      receiver     (Intercept) 4.008e-02 2.002e-01
-     sender       (Intercept) 2.155e-15 4.642e-08
-     study:sender (Intercept) 0.000e+00 0.000e+00
+     sender       (Intercept) 0.000e+00 0.000e+00
+     study:sender (Intercept) 1.364e-15 3.693e-08
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
@@ -1233,20 +1241,20 @@ summary(glmer_h7_interaction)
     (Intercept)                                                -0.54266    0.08009
     confidence_centered                                         0.10339    0.05665
     judgment                                                    1.23091    0.11757
-    detectability_sender_centered                               2.69060    0.49670
+    detectability_sender_centered                               2.69059    0.49675
     confidence_centered:judgment                               -0.28067    0.08382
-    confidence_centered:detectability_sender_centered           1.28955    0.37501
-    judgment:detectability_sender_centered                      5.28677    0.78016
-    confidence_centered:judgment:detectability_sender_centered -1.34430    0.54943
+    confidence_centered:detectability_sender_centered           1.28955    0.37504
+    judgment:detectability_sender_centered                      5.28678    0.78028
+    confidence_centered:judgment:detectability_sender_centered -1.34430    0.54950
                                                                z value Pr(>|z|)    
     (Intercept)                                                 -6.776 1.24e-11 ***
-    confidence_centered                                          1.825 0.068024 .  
-    judgment                                                    10.470  < 2e-16 ***
-    detectability_sender_centered                                5.417 6.06e-08 ***
+    confidence_centered                                          1.825 0.068025 .  
+    judgment                                                    10.469  < 2e-16 ***
+    detectability_sender_centered                                5.416 6.08e-08 ***
     confidence_centered:judgment                                -3.348 0.000813 ***
-    confidence_centered:detectability_sender_centered            3.439 0.000584 ***
-    judgment:detectability_sender_centered                       6.777 1.23e-11 ***
-    confidence_centered:judgment:detectability_sender_centered  -2.447 0.014416 *  
+    confidence_centered:detectability_sender_centered            3.438 0.000585 ***
+    judgment:detectability_sender_centered                       6.775 1.24e-11 ***
+    confidence_centered:judgment:detectability_sender_centered  -2.446 0.014429 *  
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1258,7 +1266,7 @@ summary(glmer_h7_interaction)
     cnfdnc_cnt: -0.042 -0.674 -0.003  0.027                     
     cnfdnc_c:__ -0.051 -0.039  0.037  0.039  0.022              
     jdgmnt:dt__  0.023  0.035  0.162 -0.634 -0.071 -0.019       
-    cnfdnc_::__  0.035  0.024 -0.062 -0.026  0.178 -0.683 -0.095
+    cnfdnc_::__  0.035  0.024 -0.062 -0.026  0.178 -0.684 -0.095
     optimizer (bobyqa) convergence code: 0 (OK)
     boundary (singular) fit: see help('isSingular')
 
@@ -1372,17 +1380,17 @@ summary(glmer_h7_base_rc)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.02506  0.1583  
-     sender       (Intercept) 0.28139  0.5305  
-     study:sender (Intercept) 0.34168  0.5845  
+     sender       (Intercept) 0.36297  0.6025  
+     study:sender (Intercept) 0.26010  0.5100  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
                                   Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -0.575307   0.170384  -3.377 0.000734 ***
+    (Intercept)                  -0.575307   0.170406  -3.376 0.000735 ***
     confidence_centered           0.115085   0.057727   1.994 0.046193 *  
-    judgment                      1.158913   0.116764   9.925  < 2e-16 ***
-    detectability_study_centered  6.105275   2.758183   2.214 0.026862 *  
-    n_judgments_sender           -0.000529   0.002428  -0.218 0.827508    
+    judgment                      1.158913   0.116765   9.925  < 2e-16 ***
+    detectability_study_centered  6.105292   2.763064   2.210 0.027132 *  
+    n_judgments_sender           -0.000529   0.002428  -0.218 0.827550    
     confidence_centered:judgment -0.283217   0.078925  -3.588 0.000333 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -1391,14 +1399,14 @@ summary(glmer_h7_base_rc)
                 (Intr) cnfdn_ jdgmnt dtct__ n_jdg_
     cnfdnc_cntr -0.002                            
     judgment    -0.323 -0.036                     
-    dtctblty_s_ -0.255  0.010  0.061              
-    n_jdgmnts_s -0.541  0.015 -0.016  0.362       
-    cnfdnc_cnt:  0.003 -0.730  0.011 -0.036 -0.023
+    dtctblty_s_ -0.256  0.010  0.061              
+    n_jdgmnts_s -0.541  0.015 -0.015  0.363       
+    cnfdnc_cnt:  0.003 -0.730  0.011 -0.037 -0.023
     fit warnings:
     Some predictor variables are on very different scales: consider rescaling
     optimizer (bobyqa) convergence code: 0 (OK)
-    Model is nearly unidentifiable: large eigenvalue ratio
-     - Rescale variables?
+    unable to evaluate scaled gradient
+    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
 
 ``` r
 summary(glmer_h7_interaction_rc)
@@ -1430,35 +1438,35 @@ summary(glmer_h7_interaction_rc)
 
     Fixed effects:
                                                                  Estimate
-    (Intercept)                                                -0.4282626
-    confidence_centered                                         0.1021841
-    judgment                                                    1.2417296
-    detectability_sender_centered                               2.6399589
+    (Intercept)                                                -0.4282590
+    confidence_centered                                         0.1021833
+    judgment                                                    1.2417265
+    detectability_sender_centered                               2.6399297
     n_judgments_sender                                         -0.0010567
-    confidence_centered:judgment                               -0.2802043
-    confidence_centered:detectability_sender_centered           1.2971191
-    judgment:detectability_sender_centered                      5.3641792
-    confidence_centered:judgment:detectability_sender_centered -1.3819077
+    confidence_centered:judgment                               -0.2802024
+    confidence_centered:detectability_sender_centered           1.2971194
+    judgment:detectability_sender_centered                      5.3642083
+    confidence_centered:judgment:detectability_sender_centered -1.3818941
                                                                Std. Error z value
-    (Intercept)                                                 0.1266377  -3.382
+    (Intercept)                                                 0.1266373  -3.382
     confidence_centered                                         0.0566536   1.804
-    judgment                                                    0.1180680  10.517
-    detectability_sender_centered                               0.4974847   5.307
+    judgment                                                    0.1180682  10.517
+    detectability_sender_centered                               0.4974910   5.306
     n_judgments_sender                                          0.0009106  -1.160
     confidence_centered:judgment                                0.0838278  -3.343
-    confidence_centered:detectability_sender_centered           0.3745188   3.463
-    judgment:detectability_sender_centered                      0.7845429   6.837
-    confidence_centered:judgment:detectability_sender_centered  0.5514987  -2.506
+    confidence_centered:detectability_sender_centered           0.3745271   3.463
+    judgment:detectability_sender_centered                      0.7845590   6.837
+    confidence_centered:judgment:detectability_sender_centered  0.5515009  -2.506
                                                                Pr(>|z|)    
     (Intercept)                                                0.000720 ***
-    confidence_centered                                        0.071284 .  
+    confidence_centered                                        0.071286 .  
     judgment                                                    < 2e-16 ***
     detectability_sender_centered                              1.12e-07 ***
-    n_judgments_sender                                         0.245860    
+    n_judgments_sender                                         0.245852    
     confidence_centered:judgment                               0.000830 ***
     confidence_centered:detectability_sender_centered          0.000533 ***
     judgment:detectability_sender_centered                     8.07e-12 ***
-    confidence_centered:judgment:detectability_sender_centered 0.012220 *  
+    confidence_centered:judgment:detectability_sender_centered 0.012221 *  
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1519,13 +1527,13 @@ summary(glmer_h2_real)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.00000  0.0000  
-     sender       (Intercept) 0.74414  0.8626  
-     study:sender (Intercept) 0.04763  0.2182  
+     sender       (Intercept) 0.74381  0.8624  
+     study:sender (Intercept) 0.04796  0.2190  
     Number of obs: 1200, groups:  receiver, 150; sender, 8; study:sender, 8
 
     Fixed effects:
                                  Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -1.08157    0.33123  -3.265  0.00109 ** 
+    (Intercept)                  -1.08157    0.33122  -3.265  0.00109 ** 
     confidence_centered           0.07567    0.06964   1.086  0.27728    
     judgment                      1.55984    0.13976  11.161  < 2e-16 ***
     confidence_centered:judgment -0.25740    0.09312  -2.764  0.00570 ** 
@@ -1563,13 +1571,13 @@ summary(glmer_h7_base_real)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.00000  0.0000  
-     sender       (Intercept) 0.74414  0.8626  
-     study:sender (Intercept) 0.04763  0.2182  
+     sender       (Intercept) 0.74381  0.8624  
+     study:sender (Intercept) 0.04796  0.2190  
     Number of obs: 1200, groups:  receiver, 150; sender, 8; study:sender, 8
 
     Fixed effects:
                                  Estimate Std. Error z value Pr(>|z|)    
-    (Intercept)                  -1.08157    0.33123  -3.265  0.00109 ** 
+    (Intercept)                  -1.08157    0.33122  -3.265  0.00109 ** 
     confidence_centered           0.07567    0.06964   1.086  0.27728    
     judgment                      1.55984    0.13976  11.161  < 2e-16 ***
     confidence_centered:judgment -0.25740    0.09312  -2.764  0.00570 ** 
@@ -1618,20 +1626,20 @@ summary(glmer_h7_interaction_real)
     (Intercept)                                                -0.84310    0.09950
     confidence_centered                                         0.13799    0.07201
     judgment                                                    1.77553    0.14694
-    detectability_sender_centered                              -1.36387    0.79592
+    detectability_sender_centered                              -1.36388    0.79593
     confidence_centered:judgment                               -0.28732    0.10387
-    confidence_centered:detectability_sender_centered           2.04745    0.58290
-    judgment:detectability_sender_centered                     11.10711    1.13066
-    confidence_centered:judgment:detectability_sender_centered -1.68203    0.78471
+    confidence_centered:detectability_sender_centered           2.04744    0.58290
+    judgment:detectability_sender_centered                     11.10711    1.13068
+    confidence_centered:judgment:detectability_sender_centered -1.68202    0.78468
                                                                z value Pr(>|z|)    
     (Intercept)                                                 -8.473  < 2e-16 ***
-    confidence_centered                                          1.916 0.055316 .  
+    confidence_centered                                          1.916 0.055317 .  
     judgment                                                    12.084  < 2e-16 ***
-    detectability_sender_centered                               -1.714 0.086606 .  
+    detectability_sender_centered                               -1.714 0.086608 .  
     confidence_centered:judgment                                -2.766 0.005670 ** 
-    confidence_centered:detectability_sender_centered            3.513 0.000444 ***
-    judgment:detectability_sender_centered                       9.824  < 2e-16 ***
-    confidence_centered:judgment:detectability_sender_centered  -2.144 0.032072 *  
+    confidence_centered:detectability_sender_centered            3.512 0.000444 ***
+    judgment:detectability_sender_centered                       9.823  < 2e-16 ***
+    confidence_centered:judgment:detectability_sender_centered  -2.144 0.032067 *  
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1868,8 +1876,8 @@ summary(glmer_h8_base)
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.0000   0.0000  
-     sender       (Intercept) 0.3460   0.5882  
-     study:sender (Intercept) 0.3451   0.5874  
+     sender       (Intercept) 0.3844   0.6200  
+     study:sender (Intercept) 0.3067   0.5538  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
@@ -1877,7 +1885,7 @@ summary(glmer_h8_base)
     (Intercept)                  -0.52596    0.14858  -3.540   0.0004 ***
     confidence_centered           0.12687    0.06011   2.110   0.0348 *  
     judgment                      1.06363    0.12061   8.819  < 2e-16 ***
-    ability_receiver_centered     4.84473    0.41291  11.733  < 2e-16 ***
+    ability_receiver_centered     4.84474    0.41291  11.733  < 2e-16 ***
     confidence_centered:judgment -0.33891    0.08201  -4.133 3.59e-05 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -1909,13 +1917,13 @@ summary(glmer_h8_interaction)
 
     Scaled residuals: 
         Min      1Q  Median      3Q     Max 
-    -3.1396 -0.7041 -0.3059  0.7232  7.9020 
+    -3.1396 -0.7041 -0.3059  0.7232  7.9019 
 
     Random effects:
      Groups       Name        Variance Std.Dev.
      receiver     (Intercept) 0.0000   0.0000  
-     sender       (Intercept) 0.2894   0.5379  
-     study:sender (Intercept) 0.3964   0.6296  
+     sender       (Intercept) 0.3446   0.5871  
+     study:sender (Intercept) 0.3411   0.5841  
     Number of obs: 1643, groups:  receiver, 150; sender, 67; study:sender, 67
 
     Fixed effects:
@@ -1923,20 +1931,20 @@ summary(glmer_h8_interaction)
     (Intercept)                                            -0.53038    0.14855
     confidence_centered                                     0.12786    0.06035
     judgment                                                1.07408    0.12124
-    ability_receiver_centered                               5.01108    0.59923
+    ability_receiver_centered                               5.01107    0.59930
     confidence_centered:judgment                           -0.34396    0.08256
-    confidence_centered:ability_receiver_centered          -0.05574    0.41495
-    judgment:ability_receiver_centered                     -0.25470    0.84117
-    confidence_centered:judgment:ability_receiver_centered -0.31076    0.57198
+    confidence_centered:ability_receiver_centered          -0.05573    0.41497
+    judgment:ability_receiver_centered                     -0.25469    0.84127
+    confidence_centered:judgment:ability_receiver_centered -0.31077    0.57200
                                                            z value Pr(>|z|)    
     (Intercept)                                             -3.570 0.000356 ***
-    confidence_centered                                      2.119 0.034128 *  
+    confidence_centered                                      2.119 0.034129 *  
     judgment                                                 8.859  < 2e-16 ***
-    ability_receiver_centered                                8.363  < 2e-16 ***
+    ability_receiver_centered                                8.362  < 2e-16 ***
     confidence_centered:judgment                            -4.166  3.1e-05 ***
-    confidence_centered:ability_receiver_centered           -0.134 0.893141    
-    judgment:ability_receiver_centered                      -0.303 0.762053    
-    confidence_centered:judgment:ability_receiver_centered  -0.543 0.586922    
+    confidence_centered:ability_receiver_centered           -0.134 0.893161    
+    judgment:ability_receiver_centered                      -0.303 0.762088    
+    confidence_centered:judgment:ability_receiver_centered  -0.543 0.586925    
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
