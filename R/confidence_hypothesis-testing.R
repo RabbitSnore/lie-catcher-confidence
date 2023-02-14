@@ -400,8 +400,7 @@ glmer_h1 <-
   glmer(accuracy ~ 
         1
         + confidence_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -418,8 +417,7 @@ glmer_h2_base <-
         1
         + confidence_centered
         + judgment
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -432,8 +430,7 @@ glmer_h2_interaction <-
         1
         + confidence_centered
         * judgment
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -453,7 +450,7 @@ glmer_h3_base <-
         1
         + confidence_centered
         * judgment
-        + (1|study:sender)
+        + (1|study/sender)
         + (1 + confidence_centered + judgment | sender)
         + (1|receiver),
         family = binomial(link = "logit"),
@@ -467,7 +464,7 @@ glmer_h3_interaction <-
         1
         + confidence_centered
         * judgment
-        + (1|study:sender)
+        + (1|study/sender)
         + (1 
            + confidence_centered 
            + judgment 
@@ -491,8 +488,8 @@ glmer_h4_base <-
         1
         + confidence_centered
         * judgment
-        + (1 + confidence_centered + judgment | study:sender)
-        + (1|sender)
+        + (1 + confidence_centered + judgment | study)
+        + (1|study:sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -508,8 +505,8 @@ glmer_h4_interaction <-
         + (1 
            + confidence_centered 
            + judgment 
-           + confidence_centered:judgment | study:sender)
-        + (1|sender)
+           + confidence_centered:judgment | study)
+        + (1|study:sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -529,8 +526,7 @@ glmer_h5_base <-
         1
         + confidence_centered
         * judgment
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1 + confidence_centered + judgment | receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -543,8 +539,7 @@ glmer_h5_interaction <-
         1
         + confidence_centered
         * judgment
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1
            + confidence_centered 
            + judgment 
@@ -568,8 +563,7 @@ glmer_h6_base <-
         + confidence_centered
         * judgment
         + detectability_study_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -583,8 +577,7 @@ glmer_h6_interaction <-
         + confidence_centered
         * judgment
         * detectability_study_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -610,8 +603,7 @@ glmer_h6_base_rc <-
         * judgment
         + detectability_study_centered
         + n_judgments_study
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -626,8 +618,7 @@ glmer_h6_interaction_rc <-
         * judgment
         * detectability_study_centered
         + n_judgments_study
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -648,8 +639,7 @@ glmer_h7_base <-
         + confidence_centered
         * judgment
         + detectability_study_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -663,8 +653,7 @@ glmer_h7_interaction <-
         + confidence_centered
         * judgment
         * detectability_sender_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -690,8 +679,7 @@ glmer_h7_base_rc <-
         * judgment
         + detectability_study_centered
         + n_judgments_sender
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -706,8 +694,7 @@ glmer_h7_interaction_rc <-
         * judgment
         * detectability_sender_centered
         + n_judgments_sender
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -724,8 +711,7 @@ glmer_h2_mock <-
           1
         + confidence_centered
         * judgment
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = filter(judgment, study != "press_conf"),
@@ -755,8 +741,7 @@ glmer_h7_base_mock <-
         + confidence_centered
         * judgment
         + detectability_study_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = filter(judgment, study != "press_conf"),
@@ -770,8 +755,7 @@ glmer_h7_interaction_mock <-
         + confidence_centered
         * judgment
         * detectability_sender_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = filter(judgment, study != "press_conf"),
@@ -826,8 +810,7 @@ glmer_h8_base <-
         + confidence_centered
         * judgment
         + ability_receiver_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -841,8 +824,7 @@ glmer_h8_interaction <-
         + confidence_centered
         * judgment
         * ability_receiver_centered
-        + (1|study:sender)
-        + (1|sender)
+        + (1|study/sender)
         + (1|receiver),
         family = binomial(link = "logit"),
         data = judgment,
@@ -851,6 +833,21 @@ glmer_h8_interaction <-
           optCtrl = list(maxfun = 100000)))
 
 lrt_h8 <- anova(glmer_h2_interaction, glmer_h8_base, glmer_h8_interaction)
+
+# Unconditional model ----------------------------------------------------------
+
+glmer_uc <- 
+  glmer(accuracy ~ 
+          1
+        + (1|study/sender)
+        + (1|receiver),
+        family = binomial(link = "logit"),
+        data = judgment,
+        control = glmerControl(
+          optimizer = "bobyqa",
+          optCtrl = list(maxfun = 100000)))
+
+unconditional_icc <- icc(glmer_uc, by_group = TRUE, tolerance = 0)
 
 # Save fitted model objects ----------------------------------------------------
 

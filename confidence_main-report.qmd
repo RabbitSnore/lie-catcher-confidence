@@ -93,8 +93,19 @@ knitr::include_graphics("./figures/confidence_study_plot.png")
 ## By Sender Detectability
 
 ```{r}
+unconditional_icc
+```
+
+```{r}
 knitr::include_graphics("./figures/confidence_detectability_plot.png")
 ```
+
+# Note on Hypothesis Testing
+
+Note that the random effects have been respecified from the registered code to
+better reflect the data structure. Specifically, the random effects now properly
+represent senders nested in studies. The registered code did not represent this
+structure correctly.
 
 # Hypothesis 1: General Confidence-Accuracy Relationship
 
@@ -155,7 +166,8 @@ summary(glmer_h3_interaction)
 judgments are more accurate, possibly to a greater extent for lie judgments than
 truth judgments, and this tendency varies in magnitude across contexts.*
 
-Model failed to converge. Do not interpret.
+There is evidence of variation in the predictive effect of confidence and
+judgment type across studies.
 
 ```{r}
 lrt_h4
